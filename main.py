@@ -58,11 +58,11 @@ class CryptoTradeProfitCalculator(QDialog):
 
         # setting up dictionary of Crypto Coins
         self.data = self.make_data()
+
         # sorting the dictionary of Crypto Coins by the keys. The keys at the high level are dates, so we are sorting by date
         self.stocks = sorted(self.data.keys())
-        '''
-            Array of names for the available crypto currencies.
-        '''
+        '''Array of names for the available crypto currencies.'''
+
         # -------- EXAMPLE --------
 
         # the following lines of code are for debugging purposes and show you how to access the self.data to get dates and prices
@@ -84,6 +84,10 @@ class CryptoTradeProfitCalculator(QDialog):
 
         # -------- END OF EXAMPLE --------
 
+        self.init_ui()
+
+    def init_ui(self):
+        pass
         # TODO: create QLabel for CryptoCurrency purchased
 
         # TODO: create QComboBox and populate it with a list of CrytoCurrencies
@@ -115,13 +119,17 @@ class CryptoTradeProfitCalculator(QDialog):
         # row 6 - display sell total
 
         # TODO: set the calendar values
+
         # purchase: two weeks before most recent
+
         # sell: most recent
 
         # TODO: connecting signals to slots to that a change in one control updates the UI
 
         # TODO: set the window title
+
         # TODO: update the UI
+
 
     def updateUi(self):
         '''
