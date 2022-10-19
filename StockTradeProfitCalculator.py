@@ -92,6 +92,8 @@ class CryptoTradeProfitCalculator(QDialog):
         select_currency_label = QLabel("Crypto-Currency Purchased:")
 
         # TODO: create QComboBox and populate it with a list of CrytoCurrencies
+        select_currency_combobox = QComboBox()
+        select_currency_combobox.addItems(self.stocks)
 
         # TODO: create CalendarWidgets for selection of purchase and sell dates
 
