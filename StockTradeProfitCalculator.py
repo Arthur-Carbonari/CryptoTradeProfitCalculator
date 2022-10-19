@@ -129,7 +129,15 @@ class CryptoTradeProfitCalculator(QDialog):
         layout.setSpacing(10)
         self.setLayout(layout)
 
-        # row 0 - CrytoCurrency selection
+        # Initialize groupboxes
+        groupbox_purchase = QGroupBox("Purchase")
+        groupbox_sell = QGroupBox("Sale")
+        groupbox_graph = QGroupBox("Graph")
+        groupbox_analyses = QGroupBox("Analyses")
+
+        # Add CryptoCurrency selection to layout
+        layout.addWidget(select_currency_label, 1, 0)
+        layout.addWidget(select_currency_combobox, 1, 1)
 
         # row 1 - quantity selection
 
