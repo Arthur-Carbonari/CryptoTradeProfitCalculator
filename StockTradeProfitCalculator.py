@@ -109,6 +109,8 @@ class CryptoTradeProfitCalculator(QDialog):
         self.sell_date_calendar = QCalendarWidget()
 
         # TODO: create QSpinBox to select CryptoCurrency quantity purchased
+        quantity_purchased_label = QLabel("Quantity Purchased:")
+        quantity_purchased_spinbox = QSpinBox()
 
         # TODO: create QLabels to show the CryptoCurrency purchase total
 
