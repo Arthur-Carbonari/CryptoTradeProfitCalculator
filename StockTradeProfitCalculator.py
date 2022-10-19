@@ -29,7 +29,7 @@ PyCharm Configuration Options
 # standard imports
 import sys
 from PyQt6.QtCore import QDate
-from PyQt6.QtWidgets import QLabel, QComboBox, QCalendarWidget, QDialog, QApplication, QGridLayout, QSpinBox
+from PyQt6.QtWidgets import QLabel, QComboBox, QCalendarWidget, QDialog, QApplication, QGridLayout, QSpinBox, QGroupBox
 from PyQt6 import QtCore
 from decimal import Decimal
 
@@ -125,6 +125,9 @@ class CryptoTradeProfitCalculator(QDialog):
         total_profit_var = QLabel("$$.$$")
 
         # TODO: initialize the layout - 6 rows to start
+        layout = QGridLayout()
+        layout.setSpacing(10)
+        self.setLayout(layout)
 
         # row 0 - CrytoCurrency selection
 
