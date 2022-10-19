@@ -33,6 +33,7 @@ from PyQt6.QtWidgets import QLabel, QComboBox, QCalendarWidget, QDialog, QApplic
     QFormLayout
 from PyQt6 import QtCore
 from decimal import Decimal
+import pyqtgraph as pg
 
 
 class CryptoTradeProfitCalculator(QDialog):
@@ -160,6 +161,13 @@ class CryptoTradeProfitCalculator(QDialog):
 
         groupbox_sell.setLayout(sale_layout)
 
+        # Set graph GroupBox layout
+        plt = pg.plot()
+        graph_layout = QGridLayout()
+        graph_layout.addWidget(plt)
+
+        groupbox_graph.setLayout(graph_layout)
+
         # Set analyses GroupBox layout
         analyses_layout = QFormLayout()
         analyses_layout.addRow(total_purchased_label, total_purchased_var)
@@ -167,8 +175,6 @@ class CryptoTradeProfitCalculator(QDialog):
         analyses_layout.addRow(total_profit_label, total_profit_var)
 
         groupbox_analyses.setLayout(analyses_layout)
-
-        # row 4 - sell date selection
 
         # row 5 - display sell total
 
