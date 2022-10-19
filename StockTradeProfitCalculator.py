@@ -153,7 +153,12 @@ class CryptoTradeProfitCalculator(QDialog):
 
         groupbox_purchase.setLayout(purchase_layout)
 
-        # row 2 - purchase date selection
+        # Set sale GroupBox layout
+        sale_layout = QFormLayout()
+        # sale_layout.addRow(quantity_purchased_label, quantity_purchased_spinbox)
+        sale_layout.addRow(sell_date_label, self.sell_date_calendar)
+
+        groupbox_sell.setLayout(sale_layout)
 
         # row 3 - display purchase total
 
