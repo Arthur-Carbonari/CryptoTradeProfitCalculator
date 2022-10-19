@@ -29,7 +29,8 @@ PyCharm Configuration Options
 # standard imports
 import sys
 from PyQt6.QtCore import QDate
-from PyQt6.QtWidgets import QLabel, QComboBox, QCalendarWidget, QDialog, QApplication, QGridLayout, QSpinBox, QGroupBox
+from PyQt6.QtWidgets import QLabel, QComboBox, QCalendarWidget, QDialog, QApplication, QGridLayout, QSpinBox, QGroupBox, \
+    QFormLayout
 from PyQt6 import QtCore
 from decimal import Decimal
 
@@ -145,7 +146,12 @@ class CryptoTradeProfitCalculator(QDialog):
         layout.addWidget(groupbox_graph, 3, 0)
         layout.addWidget(groupbox_analyses, 3, 1)
 
-        # row 1 - quantity selection
+        # Set purchase GroupBox layout
+        purchase_layout = QFormLayout()
+        purchase_layout.addRow(quantity_purchased_label, quantity_purchased_spinbox)
+        purchase_layout.addRow(purchase_date_label, self.purchase_date_calendar)
+
+        groupbox_purchase.setLayout(purchase_layout)
 
         # row 2 - purchase date selection
 
