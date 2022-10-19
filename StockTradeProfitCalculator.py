@@ -87,8 +87,9 @@ class CryptoTradeProfitCalculator(QDialog):
         self.init_ui()
 
     def init_ui(self):
-        pass
+
         # TODO: create QLabel for CryptoCurrency purchased
+        select_currency_label = QLabel("Crypto-Currency Purchased:")
 
         # TODO: create QComboBox and populate it with a list of CrytoCurrencies
 
