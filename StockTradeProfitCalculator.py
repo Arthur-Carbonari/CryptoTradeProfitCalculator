@@ -113,6 +113,8 @@ class CryptoTradeProfitCalculator(QDialog):
         quantity_purchased_spinbox = QSpinBox()
 
         # TODO: create QLabels to show the CryptoCurrency purchase total
+        total_purchased_label = QLabel("Total Purchased:")
+        total_purchased_var = QLabel("$$.$$")
 
         # TODO: create QLabels to show the CryptoCurrency sell total
 
