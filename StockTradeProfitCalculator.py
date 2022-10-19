@@ -139,6 +139,12 @@ class CryptoTradeProfitCalculator(QDialog):
         layout.addWidget(select_currency_label, 1, 0)
         layout.addWidget(select_currency_combobox, 1, 1)
 
+        # Add group boxes to layout
+        layout.addWidget(groupbox_purchase, 2, 0)
+        layout.addWidget(groupbox_sell, 2, 1)
+        layout.addWidget(groupbox_graph, 3, 0)
+        layout.addWidget(groupbox_analyses, 3, 1)
+
         # row 1 - quantity selection
 
         # row 2 - purchase date selection
