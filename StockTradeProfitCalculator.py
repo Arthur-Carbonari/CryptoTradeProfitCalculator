@@ -117,6 +117,8 @@ class CryptoTradeProfitCalculator(QDialog):
         total_purchased_var = QLabel("$$.$$")
 
         # TODO: create QLabels to show the CryptoCurrency sell total
+        total_sold_label = QLabel("Total Sold:")
+        total_sold_var = QLabel("$$.$$")
 
         # TODO: create QLabels to show the CryptoCurrency profit total
 
