@@ -63,6 +63,12 @@ class CryptoTradeProfitCalculator(QDialog):
         self.stocks = sorted(self.data.keys())
         '''Array of names for the available crypto currencies.'''
 
+        self.purchase_date_calendar = None
+        '''Calendar widget for the selection of the purchase date'''
+
+        self.sell_date_calendar = None
+        '''Calendar widget for the selection of the sell date'''
+
         # -------- EXAMPLE --------
 
         # the following lines of code are for debugging purposes and show you how to access the self.data to get dates and prices
@@ -96,6 +102,11 @@ class CryptoTradeProfitCalculator(QDialog):
         select_currency_combobox.addItems(self.stocks)
 
         # TODO: create CalendarWidgets for selection of purchase and sell dates
+        purchase_date_label = QLabel("Date Purchased:")
+        self.purchase_date_calendar = QCalendarWidget()
+
+        sell_date_label = QLabel("Date Sold:")
+        self.sell_date_calendar = QCalendarWidget()
 
         # TODO: create QSpinBox to select CryptoCurrency quantity purchased
 
