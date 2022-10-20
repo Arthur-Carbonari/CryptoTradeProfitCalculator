@@ -164,6 +164,7 @@ class CryptoTradeProfitCalculator(QDialog):
         # Set graph GroupBox layout
         plt = pg.plot()
         graph_layout = QGridLayout()
+        graph_layout.setContentsMargins(15, 15, 15, 15)
         graph_layout.addWidget(plt)
 
         groupbox_graph.setLayout(graph_layout)
