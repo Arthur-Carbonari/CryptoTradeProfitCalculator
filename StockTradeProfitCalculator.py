@@ -65,10 +65,10 @@ class CryptoTradeProfitCalculator(QDialog):
         self.stocks = sorted(self.data.keys())
         '''Array of names for the available crypto currencies.'''
 
-        self.purchase_date_calendar = None
+        self.purchase_date_calendar: QCalendarWidget
         '''Calendar widget for the selection of the purchase date'''
 
-        self.sell_date_calendar = None
+        self.sell_date_calendar: QCalendarWidget
         '''Calendar widget for the selection of the sell date'''
 
         # -------- EXAMPLE --------
@@ -210,7 +210,25 @@ class CryptoTradeProfitCalculator(QDialog):
             print(e)
 
     def update_calendars(self, selected_coin):
-        pass
+        dates = sorted(self.data[selected_coin].keys())
+
+        min_date: QDate = dates[0]
+        max_date: QDate = dates[-1]
+
+        if not self.purchase_date_calendar.isEnabled():
+
+            self.purchase_date_calendar.setDisabled(False)
+            self.sell_date_calendar.setDisabled(False)
+
+            new_buy_date, new_sell_date = dates[-15], dates[-1]
+
+        else:
+            pass
+
+        self.purchase_date_calendar.setDateRange(min_date, max_date)
+        self.sell_date_calendar.setDateRange(min_date, max_date)
+        self.purchase_date_calendar.setSelectedDate(new_sell_date)
+        self.sell_date_calendar.setSelectedDate(new_buy_date)
 
     ################ YOU DO NOT HAVE TO EDIT CODE BELOW THIS POINT  ########################################################
 
