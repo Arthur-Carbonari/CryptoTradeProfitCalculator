@@ -119,8 +119,8 @@ class CryptoTradeProfitCalculator(QDialog):
 
         # TODO: create QSpinBox to select CryptoCurrency quantity purchased
         quantity_purchased_label = QLabel("Quantity Purchased:")
-        self.quantity_purchased_spinbox = QSpinBox()
-        self.quantity_purchased_spinbox.setValue(1)
+        quantity_purchased_spinbox = QSpinBox()
+        quantity_purchased_spinbox.setValue(1)
 
         # Create AnalysesGroupBox
         self.groupbox_analyses = AnalysesGroupBox()
@@ -147,7 +147,7 @@ class CryptoTradeProfitCalculator(QDialog):
 
         # Set purchase GroupBox layout
         purchase_layout = QFormLayout()
-        purchase_layout.addRow(quantity_purchased_label, self.quantity_purchased_spinbox)
+        purchase_layout.addRow(quantity_purchased_label, quantity_purchased_spinbox)
         purchase_layout.addRow(purchase_date_label, self.purchase_date_calendar)
 
         groupbox_purchase.setLayout(purchase_layout)
@@ -175,7 +175,7 @@ class CryptoTradeProfitCalculator(QDialog):
 
         # TODO: connecting signals to slots to that a change in one control updates the UI
         select_currency_combobox.currentTextChanged.connect(lambda: self.update_calendars(select_currency_combobox.currentText()))
-
+        quantity_purchased_spinbox.valueChanged.connect(lambda: self.groupbox_analyses.update_quantity(quantity_purchased_spinbox.value()))
         self.purchase_date_calendar.selectionChanged.connect(lambda: self.groupbox_analyses.update_purchase_cost(self.purchase_cost()))
         self.sell_date_calendar.selectionChanged.connect(lambda: self.groupbox_analyses.update_sale_cost(self.sale_cost()))
 
