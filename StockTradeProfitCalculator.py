@@ -215,20 +215,28 @@ class CryptoTradeProfitCalculator(QDialog):
         min_date: QDate = dates[0]
         max_date: QDate = dates[-1]
 
+        new_buy_date, new_sell_date = dates[-15], dates[-1]
+
         if not self.purchase_date_calendar.isEnabled():
 
             self.purchase_date_calendar.setDisabled(False)
             self.sell_date_calendar.setDisabled(False)
 
-            new_buy_date, new_sell_date = dates[-15], dates[-1]
-
         else:
-            pass
+            current_purchase_date = self.purchase_date_calendar.selectedDate()
+            current_sell_date = self.sell_date_calendar.selectedDate()
+
+            if min_date <= current_sell_date <= max_date:
+                new_sell_date = current_sell_date
+
+            # TODO rethink this condition
+            if min_date <= current_purchase_date <= max_date and current_purchase_date <= new_sell_date:
+                new_buy_date = current_purchase_date
 
         self.purchase_date_calendar.setDateRange(min_date, max_date)
         self.sell_date_calendar.setDateRange(min_date, max_date)
-        self.purchase_date_calendar.setSelectedDate(new_sell_date)
-        self.sell_date_calendar.setSelectedDate(new_buy_date)
+        self.purchase_date_calendar.setSelectedDate(new_buy_date)
+        self.sell_date_calendar.setSelectedDate(new_sell_date)
 
     ################ YOU DO NOT HAVE TO EDIT CODE BELOW THIS POINT  ########################################################
 
