@@ -35,6 +35,8 @@ from PyQt6 import QtCore
 from decimal import Decimal
 import pyqtgraph as pg
 
+from AnalysesGroupBox import AnalysesGroupBox
+
 
 class CryptoTradeProfitCalculator(QDialog):
     '''
@@ -117,17 +119,8 @@ class CryptoTradeProfitCalculator(QDialog):
         quantity_purchased_label = QLabel("Quantity Purchased:")
         quantity_purchased_spinbox = QSpinBox()
 
-        # TODO: create QLabels to show the CryptoCurrency purchase total
-        total_purchased_label = QLabel("Total Purchased:")
-        total_purchased_var = QLabel("$$.$$")
-
-        # TODO: create QLabels to show the CryptoCurrency sell total
-        total_sold_label = QLabel("Total Sold:")
-        total_sold_var = QLabel("$$.$$")
-
-        # TODO: create QLabels to show the CryptoCurrency profit total
-        total_profit_label = QLabel("Total Profit:")
-        total_profit_var = QLabel("$$.$$")
+        # Create AnalysesGroupBox
+        groupbox_analyses = AnalysesGroupBox()
 
         # TODO: initialize the layout - 6 rows to start
         layout = QGridLayout()
@@ -138,7 +131,6 @@ class CryptoTradeProfitCalculator(QDialog):
         groupbox_purchase = QGroupBox("Purchase")
         groupbox_sell = QGroupBox("Sale")
         groupbox_graph = QGroupBox("Graph")
-        groupbox_analyses = QGroupBox("Analyses")
 
         # Add CryptoCurrency selection to layout
         layout.addWidget(select_currency_label, 1, 0)
@@ -172,14 +164,6 @@ class CryptoTradeProfitCalculator(QDialog):
 
         groupbox_graph.setLayout(graph_layout)
 
-        # Set analyses GroupBox layout
-        analyses_layout = QFormLayout()
-        analyses_layout.addRow(total_purchased_label, total_purchased_var)
-        analyses_layout.addRow(total_sold_label, total_sold_var)
-        analyses_layout.addRow(total_profit_label, total_profit_var)
-
-        groupbox_analyses.setLayout(analyses_layout)
-
         # TODO: set the calendar values
 
         # purchase: two weeks before most recent
@@ -189,6 +173,7 @@ class CryptoTradeProfitCalculator(QDialog):
         # TODO: connecting signals to slots to that a change in one control updates the UI
         select_currency_combobox.currentTextChanged.connect(lambda: self.update_calendars(select_currency_combobox.currentText()))
 
+        # self.sell_date_calendar.selectionChanged.connect()
         # TODO: set the window title
 
         # TODO: update the UI
