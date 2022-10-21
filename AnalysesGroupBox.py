@@ -31,12 +31,12 @@ class AnalysesGroupBox(QGroupBox):
 
     def update_purchase_cost(self, purchase_cost):
         self.purchase_cost = purchase_cost
-        self.update_total_purchased()
+        self.__update_total_purchased()
 
     def update_quantity(self, quantity):
         self.quantity = quantity
-        self.update_total_purchased()
+        self.__update_total_purchased()
 
-    def update_total_purchased(self):
+    def __update_total_purchased(self):
         total = str(self.quantity * self.purchase_cost)
         self.total_purchased.setText("US$ " + total)
