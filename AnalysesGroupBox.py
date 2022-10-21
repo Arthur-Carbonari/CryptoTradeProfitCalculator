@@ -29,6 +29,8 @@ class AnalysesGroupBox(QGroupBox):
 
         self.setLayout(analyses_layout)
 
+    def update_purchase_cost(self, purchase_cost):
+        self.purchase_cost = purchase_cost
     def update_quantity(self, quantity):
         self.quantity = quantity
         self.update_total_purchased()
