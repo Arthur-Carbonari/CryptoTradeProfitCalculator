@@ -234,6 +234,9 @@ class CryptoTradeProfitCalculator(QDialog):
         purchase_date = self.purchase_date_calendar.selectedDate()
         return self.data[self.selected_coin][purchase_date]
 
+    def sale_cost(self):
+        sale_date = self.sell_date_calendar.selectedDate()
+        return self.data[self.selected_coin][sale_date]
 
     ################ YOU DO NOT HAVE TO EDIT CODE BELOW THIS POINT  ########################################################
 
