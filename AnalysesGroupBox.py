@@ -2,10 +2,12 @@ from PyQt6.QtWidgets import QGroupBox, QLabel, QFormLayout
 
 
 class AnalysesGroupBox(QGroupBox):
-
     def __init__(self):
 
         super(AnalysesGroupBox, self).__init__("Purchase")
+        self.quantity = 1
+        self.purchase_cost = 0
+        self.sale_cost = 0
 
         # Create QLabels to show the CryptoCurrency purchase total
         total_purchased_label = QLabel("Total Purchased:")
@@ -26,3 +28,7 @@ class AnalysesGroupBox(QGroupBox):
         analyses_layout.addRow(total_profit_label, self.total_profit)
 
         self.setLayout(analyses_layout)
+
+    def update_total_purchased(self):
+        total = str(self.quantity, self.purchase_cost)
+        self.total_purchased.setText("US$ " + total)
