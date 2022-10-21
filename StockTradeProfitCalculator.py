@@ -177,6 +177,8 @@ class CryptoTradeProfitCalculator(QDialog):
         select_currency_combobox.currentTextChanged.connect(lambda: self.update_calendars(select_currency_combobox.currentText()))
 
         self.purchase_date_calendar.selectionChanged.connect(lambda: self.groupbox_analyses.update_purchase_cost(self.purchase_cost()))
+        self.sell_date_calendar.selectionChanged.connect(lambda: self.groupbox_analyses.update_sale_cost(self.sale_cost()))
+
         # TODO: set the window title
 
         # TODO: update the UI
