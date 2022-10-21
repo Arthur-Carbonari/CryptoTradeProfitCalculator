@@ -73,6 +73,8 @@ class CryptoTradeProfitCalculator(QDialog):
         self.sell_date_calendar: QCalendarWidget
         '''Calendar widget for the selection of the sell date'''
 
+        self.selected_coin = None
+
         # -------- EXAMPLE --------
 
         # the following lines of code are for debugging purposes and show you how to access the self.data to get dates and prices
@@ -117,10 +119,11 @@ class CryptoTradeProfitCalculator(QDialog):
 
         # TODO: create QSpinBox to select CryptoCurrency quantity purchased
         quantity_purchased_label = QLabel("Quantity Purchased:")
-        quantity_purchased_spinbox = QSpinBox()
+        self.quantity_purchased_spinbox = QSpinBox()
+        self.quantity_purchased_spinbox.setValue(1)
 
         # Create AnalysesGroupBox
-        groupbox_analyses = AnalysesGroupBox()
+        self.groupbox_analyses = AnalysesGroupBox()
 
         # TODO: initialize the layout - 6 rows to start
         layout = QGridLayout()
@@ -140,11 +143,11 @@ class CryptoTradeProfitCalculator(QDialog):
         layout.addWidget(groupbox_purchase, 2, 0)
         layout.addWidget(groupbox_sell, 2, 1)
         layout.addWidget(groupbox_graph, 3, 0)
-        layout.addWidget(groupbox_analyses, 3, 1)
+        layout.addWidget(self.groupbox_analyses, 3, 1)
 
         # Set purchase GroupBox layout
         purchase_layout = QFormLayout()
-        purchase_layout.addRow(quantity_purchased_label, quantity_purchased_spinbox)
+        purchase_layout.addRow(quantity_purchased_label, self.quantity_purchased_spinbox)
         purchase_layout.addRow(purchase_date_label, self.purchase_date_calendar)
 
         groupbox_purchase.setLayout(purchase_layout)
@@ -173,7 +176,7 @@ class CryptoTradeProfitCalculator(QDialog):
         # TODO: connecting signals to slots to that a change in one control updates the UI
         select_currency_combobox.currentTextChanged.connect(lambda: self.update_calendars(select_currency_combobox.currentText()))
 
-        # self.sell_date_calendar.selectionChanged.connect()
+        self.purchase_date_calendar.selectionChanged.connect(lambda: self.groupbox_analyses.update_purchase_cost(self.purchase_cost()))
         # TODO: set the window title
 
         # TODO: update the UI
@@ -195,6 +198,8 @@ class CryptoTradeProfitCalculator(QDialog):
             print(e)
 
     def update_calendars(self, selected_coin):
+
+        self.selected_coin = selected_coin
         dates = sorted(self.data[selected_coin].keys())
 
         min_date: QDate = dates[0]
