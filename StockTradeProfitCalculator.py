@@ -107,9 +107,11 @@ class CryptoTradeProfitCalculator(QDialog):
         # TODO: create CalendarWidgets for selection of purchase and sell dates
         purchase_date_label = QLabel("Date Purchased:")
         self.purchase_date_calendar = QCalendarWidget()
+        self.purchase_date_calendar.setDisabled(True)
 
         sell_date_label = QLabel("Date Sold:")
         self.sell_date_calendar = QCalendarWidget()
+        self.sell_date_calendar.setDisabled(True)
 
         # TODO: create QSpinBox to select CryptoCurrency quantity purchased
         quantity_purchased_label = QLabel("Quantity Purchased:")
@@ -178,10 +180,6 @@ class CryptoTradeProfitCalculator(QDialog):
 
         groupbox_analyses.setLayout(analyses_layout)
 
-        # row 5 - display sell total
-
-        # row 6 - display sell total
-
         # TODO: set the calendar values
 
         # purchase: two weeks before most recent
@@ -189,11 +187,11 @@ class CryptoTradeProfitCalculator(QDialog):
         # sell: most recent
 
         # TODO: connecting signals to slots to that a change in one control updates the UI
+        select_currency_combobox.currentTextChanged.connect(lambda: self.update_calendars(select_currency_combobox.currentText()))
 
         # TODO: set the window title
 
         # TODO: update the UI
-
 
     def updateUi(self):
         '''
@@ -210,6 +208,9 @@ class CryptoTradeProfitCalculator(QDialog):
             # TODO: update the label displaying totals
         except Exception as e:
             print(e)
+
+    def update_calendars(self, selected_coin):
+        pass
 
     ################ YOU DO NOT HAVE TO EDIT CODE BELOW THIS POINT  ########################################################
 
