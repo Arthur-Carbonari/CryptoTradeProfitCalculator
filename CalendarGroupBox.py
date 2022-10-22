@@ -96,3 +96,7 @@ class CalendarGroupBox(QGroupBox):
             self.sale_date_calendar.selectionChanged.emit()
         else:
             self.sale_date_calendar.setSelectedDate(max_date)
+
+    def _update_sale_date(self):
+        self.sale_date = self.sale_date_calendar.selectedDate()
+        self.sale_date_update.emit()
