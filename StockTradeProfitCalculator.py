@@ -36,6 +36,7 @@ from decimal import Decimal
 import pyqtgraph as pg
 
 from AnalysesGroupBox import AnalysesGroupBox
+from CalendarGroupBox import CalendarGroupBox
 
 
 class CryptoTradeProfitCalculator(QDialog):
@@ -108,22 +109,10 @@ class CryptoTradeProfitCalculator(QDialog):
         select_currency_combobox.setPlaceholderText("Please select a coin")
         select_currency_combobox.addItems(self.stocks)
 
-        # TODO: create CalendarWidgets for selection of purchase and sell dates
-        purchase_date_label = QLabel("Date Purchased:")
-        self.purchase_date_calendar = QCalendarWidget()
-        self.purchase_date_calendar.setDisabled(True)
-
-        sell_date_label = QLabel("Date Sold:")
-        self.sell_date_calendar = QCalendarWidget()
-        self.sell_date_calendar.setDisabled(True)
-
-        # TODO: create QSpinBox to select CryptoCurrency quantity purchased
-        quantity_purchased_label = QLabel("Quantity Purchased:")
-        quantity_purchased_spinbox = QSpinBox()
-        quantity_purchased_spinbox.setValue(1)
-
         # Create AnalysesGroupBox
         self.groupbox_analyses = AnalysesGroupBox()
+
+        self.groupbox_calendar = CalendarGroupBox()
 
         # TODO: initialize the layout - 6 rows to start
         layout = QGridLayout()
@@ -131,8 +120,6 @@ class CryptoTradeProfitCalculator(QDialog):
         self.setLayout(layout)
 
         # Initialize groupboxes
-        groupbox_purchase = QGroupBox("Purchase")
-        groupbox_sell = QGroupBox("Sale")
         groupbox_graph = QGroupBox("Graph")
 
         # Add CryptoCurrency selection to layout
@@ -140,24 +127,9 @@ class CryptoTradeProfitCalculator(QDialog):
         layout.addWidget(select_currency_combobox, 1, 1)
 
         # Add group boxes to layout
-        layout.addWidget(groupbox_purchase, 2, 0)
-        layout.addWidget(groupbox_sell, 2, 1)
+        layout.addWidget(self.groupbox_calendar, 2, 0)
         layout.addWidget(groupbox_graph, 3, 0)
         layout.addWidget(self.groupbox_analyses, 3, 1)
-
-        # Set purchase GroupBox layout
-        purchase_layout = QFormLayout()
-        purchase_layout.addRow(quantity_purchased_label, quantity_purchased_spinbox)
-        purchase_layout.addRow(purchase_date_label, self.purchase_date_calendar)
-
-        groupbox_purchase.setLayout(purchase_layout)
-
-        # Set sale GroupBox layout
-        sale_layout = QFormLayout()
-        # sale_layout.addRow(quantity_purchased_label, quantity_purchased_spinbox)
-        sale_layout.addRow(sell_date_label, self.sell_date_calendar)
-
-        groupbox_sell.setLayout(sale_layout)
 
         # Set graph GroupBox layout
         plt = pg.plot()
@@ -174,10 +146,10 @@ class CryptoTradeProfitCalculator(QDialog):
         # sell: most recent
 
         # TODO: connecting signals to slots to that a change in one control updates the UI
-        select_currency_combobox.currentTextChanged.connect(lambda: self.update_calendars(select_currency_combobox.currentText()))
-        quantity_purchased_spinbox.valueChanged.connect(lambda: self.groupbox_analyses.update_quantity(quantity_purchased_spinbox.value()))
-        self.purchase_date_calendar.selectionChanged.connect(lambda: self.groupbox_analyses.update_purchase_cost(self.purchase_cost()))
-        self.sell_date_calendar.selectionChanged.connect(lambda: self.groupbox_analyses.update_sale_cost(self.sale_cost()))
+        # select_currency_combobox.currentTextChanged.connect(lambda: self.update_calendars(select_currency_combobox.currentText()))
+        # quantity_purchased_spinbox.valueChanged.connect(lambda: self.groupbox_analyses.update_quantity(quantity_purchased_spinbox.value()))
+        # self.purchase_date_calendar.selectionChanged.connect(lambda: self.groupbox_analyses.update_purchase_cost(self.purchase_cost()))
+        # self.sell_date_calendar.selectionChanged.connect(lambda: self.groupbox_analyses.update_sale_cost(self.sale_cost()))
 
         # TODO: set the window title
 
