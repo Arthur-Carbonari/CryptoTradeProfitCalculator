@@ -29,12 +29,14 @@ PyCharm Configuration Options
 # standard imports
 import sys
 from PyQt6.QtCore import QDate
-from PyQt6.QtWidgets import QLabel, QComboBox, QCalendarWidget, QDialog, QApplication, QGridLayout, QGroupBox
+from PyQt6.QtWidgets import QLabel, QComboBox, QCalendarWidget, QDialog, QApplication, QGridLayout, QGroupBox, \
+    QFormLayout, QWidget, QVBoxLayout, QHBoxLayout
 from decimal import Decimal
 import pyqtgraph as pg
 
 from AnalysesGroupBox import AnalysesGroupBox
 from CalendarGroupBox import CalendarGroupBox
+from CurrencyBox import CurrencyBox
 
 
 class CryptoTradeProfitCalculator(QDialog):
@@ -93,14 +95,7 @@ class CryptoTradeProfitCalculator(QDialog):
 
     def init_ui(self):
 
-        # TODO: create QLabel for CryptoCurrency purchased
-        select_currency_label = QLabel("Crypto-Currency Purchased:")
-
-        # TODO: create QComboBox and populate it with a list of CryptoCurrencies
-        self.select_currency_combobox = QComboBox()
-        self.select_currency_combobox.setPlaceholderText("Please select a coin")
-        self.select_currency_combobox.addItems(self.stocks)
-
+        self.currency_box = CurrencyBox(self.stocks)
         # Create AnalysesGroupBox
         self.groupbox_analyses = AnalysesGroupBox()
 
@@ -115,8 +110,7 @@ class CryptoTradeProfitCalculator(QDialog):
         groupbox_graph = QGroupBox("Graph")
 
         # Add CryptoCurrency selection to layout
-        layout.addWidget(select_currency_label, 1, 0)
-        layout.addWidget(self.select_currency_combobox, 1, 1)
+        layout.addWidget(currency_groupbox, 1, 0)
 
         # Add group boxes to layout
         layout.addWidget(self.groupbox_calendar, 2, 0)
