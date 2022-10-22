@@ -16,7 +16,7 @@ class CurrencyBox(QWidget):
         self.select_currency_combobox.setPlaceholderText("Please select a coin")
         self.select_currency_combobox.addItems(currencies)
 
-        self.currency_update.connect(self.update_currency)
+        self.select_currency_combobox.currentTextChanged.connect(self.update_currency)
 
         self.set_up_ui()
 
