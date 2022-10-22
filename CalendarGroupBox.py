@@ -7,10 +7,10 @@ class CalendarGroupBox(QGroupBox):
     purchase_quantity = 1
     purchase_quantity_update = pyqtSignal()
 
-    purchase_date: QDate
+    purchase_date = None
     purchase_date_update = pyqtSignal()
 
-    sale_date: QDate
+    sale_date = None
     sale_date_update = pyqtSignal()
 
     dates = []
@@ -67,18 +67,20 @@ class CalendarGroupBox(QGroupBox):
     def update_dates(self, dates):
         self.dates = dates
 
-        self.purchase_date_calendar.setDisabled(False)
-        self.sale_date_calendar.setDisabled(False)
-
         min_date: QDate = dates[0]
         max_date: QDate = dates[-1]
 
+        if not self.purchase_date:
+            self.purchase_date_calendar.setDisabled(False)
+            self.purchase_date_calendar.setDateRange(min_date, max_date)
+            self.purchase_date_calendar.setSelectedDate(dates[-15])
+            return
+
+        old_date = self.purchase_date
         self.purchase_date_calendar.setDateRange(min_date, max_date)
 
-        if min_date <= self.purchase_date <= max_date:
+        if min_date <= old_date <= max_date:
             self.purchase_date_calendar.selectionChanged.emit()
-        else:
-            self.purchase_date_calendar.setSelectedDate(dates[-15])
 
     def _update_purchase_date(self):
         self.purchase_date = self.purchase_date_calendar.selectedDate()
@@ -90,12 +92,17 @@ class CalendarGroupBox(QGroupBox):
         min_date = self.purchase_date
         max_date = self.dates[-1]
 
+        if not self.sale_date:
+            self.sale_date_calendar.setDisabled(False)
+            self.sale_date_calendar.setDateRange(min_date, max_date)
+            self.sale_date_calendar.setSelectedDate(max_date)
+            return
+
+        old_date = self.sale_date
         self.sale_date_calendar.setDateRange(min_date, max_date)
 
-        if min_date <= self.sale_date <= max_date:
+        if min_date <= old_date <= max_date:
             self.sale_date_calendar.selectionChanged.emit()
-        else:
-            self.sale_date_calendar.setSelectedDate(max_date)
 
     def _update_sale_date(self):
         self.sale_date = self.sale_date_calendar.selectedDate()
