@@ -29,9 +29,7 @@ PyCharm Configuration Options
 # standard imports
 import sys
 from PyQt6.QtCore import QDate
-from PyQt6.QtWidgets import QLabel, QComboBox, QCalendarWidget, QDialog, QApplication, QGridLayout, QSpinBox, QGroupBox, \
-    QFormLayout
-from PyQt6 import QtCore
+from PyQt6.QtWidgets import QLabel, QComboBox, QCalendarWidget, QDialog, QApplication, QGridLayout, QGroupBox
 from decimal import Decimal
 import pyqtgraph as pg
 
@@ -105,9 +103,9 @@ class CryptoTradeProfitCalculator(QDialog):
         select_currency_label = QLabel("Crypto-Currency Purchased:")
 
         # TODO: create QComboBox and populate it with a list of CryptoCurrencies
-        select_currency_combobox = QComboBox()
-        select_currency_combobox.setPlaceholderText("Please select a coin")
-        select_currency_combobox.addItems(self.stocks)
+        self.select_currency_combobox = QComboBox()
+        self.select_currency_combobox.setPlaceholderText("Please select a coin")
+        self.select_currency_combobox.addItems(self.stocks)
 
         # Create AnalysesGroupBox
         self.groupbox_analyses = AnalysesGroupBox()
@@ -124,7 +122,7 @@ class CryptoTradeProfitCalculator(QDialog):
 
         # Add CryptoCurrency selection to layout
         layout.addWidget(select_currency_label, 1, 0)
-        layout.addWidget(select_currency_combobox, 1, 1)
+        layout.addWidget(self.select_currency_combobox, 1, 1)
 
         # Add group boxes to layout
         layout.addWidget(self.groupbox_calendar, 2, 0)
@@ -146,10 +144,10 @@ class CryptoTradeProfitCalculator(QDialog):
         # sell: most recent
 
         # TODO: connecting signals to slots to that a change in one control updates the UI
-        # select_currency_combobox.currentTextChanged.connect(lambda: self.update_calendars(select_currency_combobox.currentText()))
-        # quantity_purchased_spinbox.valueChanged.connect(lambda: self.groupbox_analyses.update_quantity(quantity_purchased_spinbox.value()))
-        # self.purchase_date_calendar.selectionChanged.connect(lambda: self.groupbox_analyses.update_purchase_cost(self.purchase_cost()))
-        # self.sell_date_calendar.selectionChanged.connect(lambda: self.groupbox_analyses.update_sale_cost(self.sale_cost()))
+        self.select_currency_combobox.currentTextChanged.connect(self.update_calendars)
+        self.groupbox_calendar.purchase_quantity_update.connect(self.update_purchase_quantity)
+        self.groupbox_calendar.purchase_date_update.connect(self.update_purchase_cost)
+        self.groupbox_calendar.sale_date_update.connect(self.update_sale_cost)
 
         # TODO: set the window title
 
@@ -170,45 +168,6 @@ class CryptoTradeProfitCalculator(QDialog):
             # TODO: update the label displaying totals
         except Exception as e:
             print(e)
-
-    def update_calendars(self, selected_coin):
-
-        self.selected_coin = selected_coin
-        dates = sorted(self.data[selected_coin].keys())
-
-        min_date: QDate = dates[0]
-        max_date: QDate = dates[-1]
-
-        new_buy_date, new_sell_date = dates[-15], dates[-1]
-
-        self.purchase_date_calendar.setDisabled(False)
-        self.sell_date_calendar.setDisabled(False)
-
-        current_purchase_date = self.purchase_date_calendar.selectedDate()
-        current_sell_date = self.sell_date_calendar.selectedDate()
-
-        if min_date <= current_sell_date <= max_date:
-            new_sell_date = current_sell_date
-
-        # TODO rethink this condition
-        if min_date <= current_purchase_date <= max_date and current_purchase_date <= new_sell_date:
-            new_buy_date = current_purchase_date
-
-        self.purchase_date_calendar.setDateRange(min_date, max_date)
-        self.sell_date_calendar.setDateRange(min_date, max_date)
-        self.purchase_date_calendar.setSelectedDate(new_buy_date)
-        self.sell_date_calendar.setSelectedDate(new_sell_date)
-        self.purchase_date_calendar.selectionChanged.emit()
-        self.sell_date_calendar.selectionChanged.emit()
-
-
-    def purchase_cost(self):
-        purchase_date = self.purchase_date_calendar.selectedDate()
-        return self.data[self.selected_coin][purchase_date]
-
-    def sale_cost(self):
-        sale_date = self.sell_date_calendar.selectedDate()
-        return self.data[self.selected_coin][sale_date]
 
     ################ YOU DO NOT HAVE TO EDIT CODE BELOW THIS POINT  ########################################################
 
