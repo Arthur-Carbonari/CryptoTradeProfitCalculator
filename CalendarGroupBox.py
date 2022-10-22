@@ -19,7 +19,7 @@ class CalendarGroupBox(QGroupBox):
 
         super(CalendarGroupBox, self).__init__()
 
-        # TODO: create CalendarWidgets for selection of purchase and sell dates
+        # Create CalendarWidgets for selection of purchase and sell dates:
         purchase_date_label = QLabel("Date Purchased:")
         self.purchase_date_calendar = QCalendarWidget()
         self.purchase_date_calendar.setDisabled(True)
@@ -28,7 +28,7 @@ class CalendarGroupBox(QGroupBox):
         self.sale_date_calendar = QCalendarWidget()
         self.sale_date_calendar.setDisabled(True)
 
-        # TODO: create QSpinBox to select CryptoCurrency quantity purchased
+        # Create QSpinBox to select CryptoCurrency quantity purchased
         quantity_purchased_label = QLabel("Quantity Purchased:")
         self.quantity_purchased_spinbox = QSpinBox()
         self.quantity_purchased_spinbox.setValue(1)
@@ -38,6 +38,7 @@ class CalendarGroupBox(QGroupBox):
         self.sale_date_calendar.selectionChanged.connect(self._update_sale_date)
         self.quantity_purchased_spinbox.valueChanged.connect(self._update_purchase_quantity)
 
+        # Create inner groupboxes
         groupbox_purchase = QGroupBox("Purchase")
         groupbox_sell = QGroupBox("Sale")
 
@@ -45,24 +46,18 @@ class CalendarGroupBox(QGroupBox):
         purchase_layout = QFormLayout()
         purchase_layout.addRow(quantity_purchased_label, self.quantity_purchased_spinbox)
         purchase_layout.addRow(purchase_date_label, self.purchase_date_calendar)
-
         groupbox_purchase.setLayout(purchase_layout)
 
-        # Set sale GroupBox layout
+        # Set Sale GroupBox layout TODO: add sale quantity spinner and connect it to the rest of the application logic
         sale_layout = QFormLayout()
-        # sale_layout.addRow(quantity_purchased_label, quantity_purchased_spinbox)
         sale_layout.addRow(sell_date_label, self.sale_date_calendar)
-
         groupbox_sell.setLayout(sale_layout)
 
-        splitter = QSplitter()
-
-        splitter.addWidget(groupbox_purchase)
-        splitter.addWidget(groupbox_sell)
-
-        group_layout = QHBoxLayout()
-        group_layout.addWidget(splitter)
-        self.setLayout(group_layout)
+        # Set the main layout for the GroupBox
+        main_layout = QHBoxLayout()
+        main_layout.addWidget(groupbox_purchase)
+        main_layout.addWidget(groupbox_sell)
+        self.setLayout(main_layout)
 
     def update_dates(self, dates):
         self.dates = dates
