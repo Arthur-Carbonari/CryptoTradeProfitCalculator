@@ -110,7 +110,7 @@ class CryptoTradeProfitCalculator(QDialog):
         groupbox_graph = QGroupBox("Graph")
 
         # Add CryptoCurrency selection to layout
-        layout.addWidget(currency_groupbox, 1, 0)
+        layout.addWidget(self.currency_box, 1, 0)
 
         # Add group boxes to layout
         layout.addWidget(self.groupbox_calendar, 2, 0)
@@ -132,7 +132,7 @@ class CryptoTradeProfitCalculator(QDialog):
         # sell: most recent
 
         # TODO: connecting signals to slots to that a change in one control updates the UI
-        self.select_currency_combobox.currentTextChanged.connect(self.update_calendars)
+        self.currency_box.currency_update.connect(self.update_calendars)
         self.groupbox_calendar.purchase_quantity_update.connect(self.update_purchase_quantity)
         self.groupbox_calendar.purchase_date_update.connect(self.update_purchase_cost)
         self.groupbox_calendar.sale_date_update.connect(self.update_sale_cost)
@@ -161,19 +161,16 @@ class CryptoTradeProfitCalculator(QDialog):
         self.groupbox_analyses.update_quantity(self.groupbox_calendar.purchase_quantity)
 
     def update_calendars(self):
-        selected_coin = self.select_currency_combobox.currentText()
-        self.selected_coin = selected_coin
-        dates = sorted(self.data[selected_coin].keys())
-
+        dates = sorted(self.data[self.currency_box.selected_currency].keys())
         self.groupbox_calendar.update_dates(dates)
 
     def update_purchase_cost(self):
-        purchase_cost = self.data[self.selected_coin][self.groupbox_calendar.purchase_date]
+        purchase_cost = self.data[self.currency_box.selected_currency][self.groupbox_calendar.purchase_date]
 
         self.groupbox_analyses.update_purchase_cost(purchase_cost)
 
     def update_sale_cost(self):
-        sale_cost = self.data[self.selected_coin][self.groupbox_calendar.sale_date]
+        sale_cost = self.data[self.currency_box.selected_currency][self.groupbox_calendar.sale_date]
         self.groupbox_analyses.update_sale_cost(sale_cost)
 
     ################ YOU DO NOT HAVE TO EDIT CODE BELOW THIS POINT  ########################################################
