@@ -1,5 +1,5 @@
 from PyQt6.QtCore import QDate, pyqtSignal
-from PyQt6.QtWidgets import QGroupBox, QLabel, QCalendarWidget, QSpinBox, QFormLayout, QSplitter, QHBoxLayout
+from PyQt6.QtWidgets import QGroupBox, QLabel, QCalendarWidget, QSpinBox, QFormLayout, QHBoxLayout
 
 
 class CalendarGroupBox(QGroupBox):
@@ -20,16 +20,13 @@ class CalendarGroupBox(QGroupBox):
         super(CalendarGroupBox, self).__init__()
 
         # Create CalendarWidgets for selection of purchase and sell dates:
-        purchase_date_label = QLabel("Date Purchased:")
         self.purchase_date_calendar = QCalendarWidget()
         self.purchase_date_calendar.setDisabled(True)
 
-        sell_date_label = QLabel("Date Sold:")
         self.sale_date_calendar = QCalendarWidget()
         self.sale_date_calendar.setDisabled(True)
 
         # Create QSpinBox to select CryptoCurrency quantity purchased
-        quantity_purchased_label = QLabel("Quantity Purchased:")
         self.quantity_purchased_spinbox = QSpinBox()
         self.quantity_purchased_spinbox.setValue(1)
 
@@ -38,19 +35,22 @@ class CalendarGroupBox(QGroupBox):
         self.sale_date_calendar.selectionChanged.connect(self._update_sale_date)
         self.quantity_purchased_spinbox.valueChanged.connect(self._update_purchase_quantity)
 
+        self.set_up_layout()
+
+    def set_up_layout(self):
         # Create inner groupboxes
         groupbox_purchase = QGroupBox("Purchase")
         groupbox_sell = QGroupBox("Sale")
 
         # Set purchase GroupBox layout
         purchase_layout = QFormLayout()
-        purchase_layout.addRow(quantity_purchased_label, self.quantity_purchased_spinbox)
-        purchase_layout.addRow(purchase_date_label, self.purchase_date_calendar)
+        purchase_layout.addRow(QLabel("Date Purchased:"), self.quantity_purchased_spinbox)
+        purchase_layout.addRow(QLabel("Date Sold:"), self.purchase_date_calendar)
         groupbox_purchase.setLayout(purchase_layout)
 
         # Set Sale GroupBox layout TODO: add sale quantity spinner and connect it to the rest of the application logic
         sale_layout = QFormLayout()
-        sale_layout.addRow(sell_date_label, self.sale_date_calendar)
+        sale_layout.addRow(QLabel("Quantity Purchased:"), self.sale_date_calendar)
         groupbox_sell.setLayout(sale_layout)
 
         # Set the main layout for the GroupBox
