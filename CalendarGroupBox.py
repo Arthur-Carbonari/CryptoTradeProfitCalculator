@@ -100,3 +100,7 @@ class CalendarGroupBox(QGroupBox):
     def _update_sale_date(self):
         self.sale_date = self.sale_date_calendar.selectedDate()
         self.sale_date_update.emit()
+
+    def _update_purchase_quantity(self):
+        self.purchase_quantity = self.quantity_purchased_spinbox.value()
+        self.purchase_quantity_updated.emit()
