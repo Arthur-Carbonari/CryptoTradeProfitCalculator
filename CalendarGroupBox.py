@@ -79,3 +79,8 @@ class CalendarGroupBox(QGroupBox):
             self.purchase_date_calendar.selectionChanged.emit()
         else:
             self.purchase_date_calendar.setSelectedDate(dates[-15])
+
+    def _update_purchase_date(self):
+        self.purchase_date = self.purchase_date_calendar.selectedDate()
+        self.purchase_date_update.emit()
+        self._update_sale_dates()
