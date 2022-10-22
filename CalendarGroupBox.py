@@ -63,3 +63,19 @@ class CalendarGroupBox(QGroupBox):
         group_layout = QHBoxLayout()
         group_layout.addWidget(splitter)
         self.setLayout(group_layout)
+
+    def update_dates(self, dates):
+        self.dates = dates
+
+        self.purchase_date_calendar.setDisabled(False)
+        self.sale_date_calendar.setDisabled(False)
+
+        min_date: QDate = dates[0]
+        max_date: QDate = dates[-1]
+
+        self.purchase_date_calendar.setDateRange(min_date, max_date)
+
+        if min_date <= self.purchase_date <= max_date:
+            self.purchase_date_calendar.selectionChanged.emit()
+        else:
+            self.purchase_date_calendar.setSelectedDate(dates[-15])
