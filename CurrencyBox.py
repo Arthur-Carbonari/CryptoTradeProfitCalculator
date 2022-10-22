@@ -26,6 +26,7 @@ class CurrencyBox(QWidget):
         currency_layout.addWidget(QLabel("Crypto-Currency Purchased:"))
         currency_layout.addWidget(self.select_currency_combobox, 3)
         currency_layout.addStretch(4)
+        self.setLayout(currency_layout)
 
     def update_currency(self):
         self.selected_currency = self.select_currency_combobox.currentText()
