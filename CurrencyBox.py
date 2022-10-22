@@ -4,7 +4,12 @@ from PyQt6.QtWidgets import QWidget, QComboBox, QHBoxLayout, QLabel
 
 class CurrencyBox(QWidget):
 
+    selected_currency = None
+    currency_update = pyqtSignal()
+
     def __init__(self, currencies):
+
+        super(CurrencyBox, self).__init__()
 
         # Create QComboBox and populate it with a list of CryptoCurrencies
         self.select_currency_combobox = QComboBox()
