@@ -66,12 +66,6 @@ class CryptoTradeProfitCalculator(QDialog):
         self.stocks = sorted(self.data.keys())
         '''Array of names for the available crypto currencies.'''
 
-        self.purchase_date_calendar: QCalendarWidget
-        '''Calendar widget for the selection of the purchase date'''
-
-        self.sell_date_calendar: QCalendarWidget
-        '''Calendar widget for the selection of the sell date'''
-
         self.selected_coin = None
 
         # -------- EXAMPLE --------
@@ -168,6 +162,25 @@ class CryptoTradeProfitCalculator(QDialog):
             # TODO: update the label displaying totals
         except Exception as e:
             print(e)
+
+    def update_purchase_quantity(self):
+        self.groupbox_analyses.update_quantity(self.groupbox_calendar.purchase_quantity)
+
+    def update_calendars(self):
+        selected_coin = self.select_currency_combobox.currentText()
+        self.selected_coin = selected_coin
+        dates = sorted(self.data[selected_coin].keys())
+
+        self.groupbox_calendar.update_dates(dates)
+
+    def update_purchase_cost(self):
+        purchase_cost = self.data[self.selected_coin][self.groupbox_calendar.purchase_date]
+
+        self.groupbox_analyses.update_purchase_cost(purchase_cost)
+
+    def update_sale_cost(self):
+        sale_cost = self.data[self.selected_coin][self.groupbox_calendar.sale_date]
+        self.groupbox_analyses.update_sale_cost(sale_cost)
 
     ################ YOU DO NOT HAVE TO EDIT CODE BELOW THIS POINT  ########################################################
 
