@@ -84,3 +84,15 @@ class CalendarGroupBox(QGroupBox):
         self.purchase_date = self.purchase_date_calendar.selectedDate()
         self.purchase_date_update.emit()
         self._update_sale_dates()
+
+    def _update_sale_dates(self):
+
+        min_date = self.purchase_date
+        max_date = self.dates[-1]
+
+        self.sale_date_calendar.setDateRange(min_date, max_date)
+
+        if min_date <= self.sale_date <= max_date:
+            self.sale_date_calendar.selectionChanged.emit()
+        else:
+            self.sale_date_calendar.setSelectedDate(max_date)
