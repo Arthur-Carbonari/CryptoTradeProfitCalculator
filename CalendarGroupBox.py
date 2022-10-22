@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import QGroupBox, QLabel, QCalendarWidget, QSpinBox, QFormL
 class CalendarGroupBox(QGroupBox):
 
     purchase_quantity = 1
-    purchase_quantity_updated = pyqtSignal()
+    purchase_quantity_update = pyqtSignal()
 
     purchase_date: QDate
     purchase_date_update = pyqtSignal()
@@ -103,4 +103,4 @@ class CalendarGroupBox(QGroupBox):
 
     def _update_purchase_quantity(self):
         self.purchase_quantity = self.quantity_purchased_spinbox.value()
-        self.purchase_quantity_updated.emit()
+        self.purchase_quantity_update.emit()
