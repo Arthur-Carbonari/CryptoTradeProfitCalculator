@@ -10,7 +10,7 @@ class CalendarGroupBox(QWidget):
     sale_date = None
     sale_date_update = pyqtSignal()
 
-    dates = []
+    _dates = []
 
     def __init__(self):
 
@@ -27,9 +27,9 @@ class CalendarGroupBox(QWidget):
         self.purchase_date_calendar.selectionChanged.connect(self._update_purchase_date)
         self.sale_date_calendar.selectionChanged.connect(self._update_sale_date)
 
-        self.init_ui()
+        self._init_ui()
 
-    def init_ui(self):
+    def _init_ui(self):
         # Create inner groupboxes
         groupbox_purchase = QGroupBox("Purchase")
         groupbox_sell = QGroupBox("Sale")
@@ -51,7 +51,7 @@ class CalendarGroupBox(QWidget):
         self.setLayout(main_layout)
 
     def update_dates(self, dates):
-        self.dates = dates
+        self._dates = dates
 
         min_date: QDate = dates[0]
         max_date: QDate = dates[-1]
@@ -76,7 +76,7 @@ class CalendarGroupBox(QWidget):
     def _update_sale_dates(self):
 
         min_date = self.purchase_date
-        max_date = self.dates[-1]
+        max_date = self._dates[-1]
 
         if not self.sale_date:
             self.sale_date_calendar.setDisabled(False)
