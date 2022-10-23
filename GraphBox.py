@@ -1,3 +1,4 @@
+from PyQt6.QtCore import QDateTime, QDate, QTime
 from PyQt6.QtWidgets import QGroupBox, QHBoxLayout
 from pyqtgraph import PlotWidget, DateAxisItem
 
@@ -23,3 +24,13 @@ class GraphBox(QGroupBox):
         graph_layout.addWidget(self.widget)
 
         self.setLayout(graph_layout)
+
+    def update_plot(self, dates, values):
+
+        # Converting dates[] QDate values to seconds since unix epoch
+        dates = [QDateTime(date, QTime(0, 0, 0)).toSecsSinceEpoch() for date in dates]
+
+        if self.plot:
+            self.widget.removeItem(self.plot)
+
+        self.plot = self.widget.plot(dates, values)
