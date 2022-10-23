@@ -21,9 +21,9 @@ class AnalysesGroupBox(QGroupBox):
         # Create QLabel to show the variance percentage
         self.total_variance = QLabel("00.00%")
 
-        self.init_ui()
+        self._init_ui()
 
-    def init_ui(self):
+    def _init_ui(self):
 
         # Set GroupBox layout
         analyses_layout = QFormLayout()
@@ -36,33 +36,33 @@ class AnalysesGroupBox(QGroupBox):
 
     def update_quantity(self, quantity):
         self.quantity = quantity
-        self.__update_total_purchased()
-        self.__update_total_sale()
+        self._update_total_purchased()
+        self._update_total_sale()
 
     def update_purchase_cost(self, purchase_cost):
         self.purchase_cost = purchase_cost
-        self.__update_total_purchased()
+        self._update_total_purchased()
 
     def update_sale_cost(self, sale_cost):
         self.sale_cost = sale_cost
-        self.__update_total_sale()
+        self._update_total_sale()
 
-    def __update_total_purchased(self):
+    def _update_total_purchased(self):
         total = self.quantity * self.purchase_cost
         self.total_purchased.setText('${:,.2f}'.format(total))
-        self.__update_total_profit()
-        self.__update_total_variance()
+        self._update_total_profit()
+        self._update_total_variance()
 
-    def __update_total_sale(self):
+    def _update_total_sale(self):
         total = self.quantity * self.sale_cost
         self.total_sold.setText('${:,.2f}'.format(total))
-        self.__update_total_profit()
-        self.__update_total_variance()
+        self._update_total_profit()
+        self._update_total_variance()
 
-    def __update_total_profit(self):
+    def _update_total_profit(self):
         total = self.quantity * (self.sale_cost - self.purchase_cost)
         self.total_profit.setText('${:,.2f}'.format(total))
 
-    def __update_total_variance(self):
+    def _update_total_variance(self):
         total = self.sale_cost / self.purchase_cost - 1
         self.total_variance.setText('{:,.2f}%'.format(total))
