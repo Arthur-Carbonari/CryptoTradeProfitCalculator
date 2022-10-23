@@ -1,8 +1,8 @@
 from PyQt6.QtCore import QDate, pyqtSignal
-from PyQt6.QtWidgets import QGroupBox, QLabel, QCalendarWidget, QSpinBox, QFormLayout, QHBoxLayout
+from PyQt6.QtWidgets import QGroupBox, QLabel, QCalendarWidget, QSpinBox, QFormLayout, QHBoxLayout, QWidget
 
 
-class CalendarGroupBox(QGroupBox):
+class CalendarGroupBox(QWidget):
 
     purchase_quantity = 1
     purchase_quantity_update = pyqtSignal()
@@ -44,13 +44,13 @@ class CalendarGroupBox(QGroupBox):
 
         # Set purchase GroupBox layout
         purchase_layout = QFormLayout()
-        purchase_layout.addRow(QLabel("Date Purchased:"), self.quantity_purchased_spinbox)
-        purchase_layout.addRow(QLabel("Date Sold:"), self.purchase_date_calendar)
+        purchase_layout.addRow(QLabel("Quantity Purchased:"), self.quantity_purchased_spinbox)
+        purchase_layout.addRow(QLabel("Date Purchased:"), self.purchase_date_calendar)
         groupbox_purchase.setLayout(purchase_layout)
 
         # Set Sale GroupBox layout TODO: add sale quantity spinner and connect it to the rest of the application logic
         sale_layout = QFormLayout()
-        sale_layout.addRow(QLabel("Quantity Purchased:"), self.sale_date_calendar)
+        sale_layout.addRow(QLabel("Date Sold:"), self.sale_date_calendar)
         groupbox_sell.setLayout(sale_layout)
 
         # Set the main layout for the GroupBox
