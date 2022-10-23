@@ -107,7 +107,7 @@ class CryptoTradeProfitCalculator(QDialog):
 
         # TODO: initialize the layout - 6 rows to start
         main_layout = QVBoxLayout()
-        main_layout.setSpacing(10)
+        main_layout.setSpacing(5)
         main_groupbox = QGroupBox()
         main_groupbox.setLayout(main_layout)
         wrapper_layout = QHBoxLayout()
@@ -126,10 +126,13 @@ class CryptoTradeProfitCalculator(QDialog):
         h_layout.setColumnStretch(0, 4)
         h_layout.setColumnStretch(1, 2)
         h_layout.setRowMinimumHeight(0, 300)
+        bottom_group = QWidget()
+        bottom_group.setLayout(h_layout)
 
-        widt = int(QGuiApplication.primaryScreen().geometry().width()/1.5)
+        widt = int(QGuiApplication.primaryScreen().geometry().width() * 0.8)
         self.resize(widt, self.height())
-        main_layout.addLayout(h_layout)
+
+        main_layout.addWidget(bottom_group)
 
         # TODO: connecting signals to slots to that a change in one control updates the UI
         self.currency_box.currency_update.connect(self.update_calendars)
