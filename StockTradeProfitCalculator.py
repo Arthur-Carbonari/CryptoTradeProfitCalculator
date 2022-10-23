@@ -28,15 +28,18 @@ PyCharm Configuration Options
 
 # standard imports
 import sys
-from PyQt6.QtCore import QDate
+from PyQt6.QtCore import QDate, QDateTime, QTime
+from PyQt6.QtGui import QGuiApplication
 from PyQt6.QtWidgets import QLabel, QComboBox, QCalendarWidget, QDialog, QApplication, QGridLayout, QGroupBox, \
     QFormLayout, QWidget, QVBoxLayout, QHBoxLayout
 from decimal import Decimal
 import pyqtgraph as pg
+from pyqtgraph import DateAxisItem, PlotWidget, PlotItem
 
 from AnalysesGroupBox import AnalysesGroupBox
 from CalendarGroupBox import CalendarGroupBox
 from CurrencyBox import CurrencyBox
+from GraphBox import GraphBox
 
 
 class CryptoTradeProfitCalculator(QDialog):
@@ -68,8 +71,6 @@ class CryptoTradeProfitCalculator(QDialog):
         self.stocks = sorted(self.data.keys())
         '''Array of names for the available crypto currencies.'''
 
-        self.selected_coin = None
-
         # -------- EXAMPLE --------
 
         # the following lines of code are for debugging purposes and show you how to access the self.data to get dates and prices
@@ -96,40 +97,39 @@ class CryptoTradeProfitCalculator(QDialog):
     def init_ui(self):
 
         self.currency_box = CurrencyBox(self.stocks)
-        # Create AnalysesGroupBox
-        self.groupbox_analyses = AnalysesGroupBox()
 
         self.groupbox_calendar = CalendarGroupBox()
 
-        # TODO: initialize the layout - 6 rows to start
-        layout = QGridLayout()
-        layout.setSpacing(10)
-        self.setLayout(layout)
+        self.graph_box = GraphBox()
 
-        # Initialize groupboxes
-        groupbox_graph = QGroupBox("Graph")
+        # Create AnalysesGroupBox
+        self.groupbox_analyses = AnalysesGroupBox()
+
+        # TODO: initialize the layout - 6 rows to start
+        main_layout = QVBoxLayout()
+        main_layout.setSpacing(10)
+        main_groupbox = QGroupBox()
+        main_groupbox.setLayout(main_layout)
+        wrapper_layout = QHBoxLayout()
+        wrapper_layout.addWidget(main_groupbox)
+        self.setLayout(wrapper_layout)
 
         # Add CryptoCurrency selection to layout
-        layout.addWidget(self.currency_box, 1, 0)
+        main_layout.addWidget(self.currency_box)
 
         # Add group boxes to layout
-        layout.addWidget(self.groupbox_calendar, 2, 0)
-        layout.addWidget(groupbox_graph, 3, 0)
-        layout.addWidget(self.groupbox_analyses, 3, 1)
+        main_layout.addWidget(self.groupbox_calendar)
 
-        # Set graph GroupBox layout
-        plt = pg.plot()
-        graph_layout = QGridLayout()
-        graph_layout.setContentsMargins(15, 15, 15, 15)
-        graph_layout.addWidget(plt)
+        h_layout = QGridLayout()
+        h_layout.addWidget(self.graph_box, 0, 0)
+        h_layout.addWidget(self.groupbox_analyses, 0, 1)
+        h_layout.setColumnStretch(0, 4)
+        h_layout.setColumnStretch(1, 2)
+        h_layout.setRowMinimumHeight(0, 300)
 
-        groupbox_graph.setLayout(graph_layout)
-
-        # TODO: set the calendar values
-
-        # purchase: two weeks before most recent
-
-        # sell: most recent
+        widt = int(QGuiApplication.primaryScreen().geometry().width()/1.5)
+        self.resize(widt, self.height())
+        main_layout.addLayout(h_layout)
 
         # TODO: connecting signals to slots to that a change in one control updates the UI
         self.currency_box.currency_update.connect(self.update_calendars)
