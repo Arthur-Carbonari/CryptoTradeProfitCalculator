@@ -136,6 +136,7 @@ class CryptoTradeProfitCalculator(QDialog):
         self.groupbox_calendar.purchase_quantity_update.connect(self.update_purchase_quantity)
         self.groupbox_calendar.purchase_date_update.connect(self.update_purchase_cost)
         self.groupbox_calendar.sale_date_update.connect(self.update_sale_cost)
+        self.groupbox_calendar.sale_date_update.connect(self.update_graph)
 
         # TODO: set the window title
 
@@ -172,6 +173,23 @@ class CryptoTradeProfitCalculator(QDialog):
     def update_sale_cost(self):
         sale_cost = self.data[self.currency_box.selected_currency][self.groupbox_calendar.sale_date]
         self.groupbox_analyses.update_sale_cost(sale_cost)
+
+    def update_graph(self):
+        currency_data = self.data[self.currency_box.selected_currency]
+
+        start_date = self.groupbox_calendar.purchase_date
+        end_date = self.groupbox_calendar.sale_date
+
+        dates = list(currency_data.keys())
+        values = list(currency_data.values())
+
+        start_index = dates.index(start_date)
+        end_index = dates.index(end_date)
+
+        plot_dates = dates[start_index:end_index+1]
+        plot_values = values[start_index:end_index+1]
+
+        self.graph_box.update_plot(plot_dates, plot_values)
 
     ################ YOU DO NOT HAVE TO EDIT CODE BELOW THIS POINT  ########################################################
 
