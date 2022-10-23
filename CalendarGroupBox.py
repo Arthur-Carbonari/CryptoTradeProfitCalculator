@@ -4,9 +4,6 @@ from PyQt6.QtWidgets import QGroupBox, QLabel, QCalendarWidget, QSpinBox, QFormL
 
 class CalendarGroupBox(QWidget):
 
-    purchase_quantity = 1
-    purchase_quantity_update = pyqtSignal()
-
     purchase_date = None
     purchase_date_update = pyqtSignal()
 
@@ -26,14 +23,9 @@ class CalendarGroupBox(QWidget):
         self.sale_date_calendar = QCalendarWidget()
         self.sale_date_calendar.setDisabled(True)
 
-        # Create QSpinBox to select CryptoCurrency quantity purchased
-        self.quantity_purchased_spinbox = QSpinBox()
-        self.quantity_purchased_spinbox.setValue(1)
-
         # Connecting signals to slots to that a change in one control updates the UI
         self.purchase_date_calendar.selectionChanged.connect(self._update_purchase_date)
         self.sale_date_calendar.selectionChanged.connect(self._update_sale_date)
-        self.quantity_purchased_spinbox.valueChanged.connect(self._update_purchase_quantity)
 
         self.set_up_layout()
 
@@ -44,7 +36,6 @@ class CalendarGroupBox(QWidget):
 
         # Set purchase GroupBox layout
         purchase_layout = QFormLayout()
-        purchase_layout.addRow(QLabel("Quantity Purchased:"), self.quantity_purchased_spinbox)
         purchase_layout.addRow(QLabel("Date Purchased:"), self.purchase_date_calendar)
         groupbox_purchase.setLayout(purchase_layout)
 
@@ -103,6 +94,3 @@ class CalendarGroupBox(QWidget):
         self.sale_date = self.sale_date_calendar.selectedDate()
         self.sale_date_update.emit()
 
-    def _update_purchase_quantity(self):
-        self.purchase_quantity = self.quantity_purchased_spinbox.value()
-        self.purchase_quantity_update.emit()
