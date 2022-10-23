@@ -27,9 +27,9 @@ class CalendarGroupBox(QWidget):
         self.purchase_date_calendar.selectionChanged.connect(self._update_purchase_date)
         self.sale_date_calendar.selectionChanged.connect(self._update_sale_date)
 
-        self.set_up_layout()
+        self.init_ui()
 
-    def set_up_layout(self):
+    def init_ui(self):
         # Create inner groupboxes
         groupbox_purchase = QGroupBox("Purchase")
         groupbox_sell = QGroupBox("Sale")

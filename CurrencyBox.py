@@ -26,9 +26,9 @@ class CurrencyBox(QWidget):
         self.select_currency_combobox.currentTextChanged.connect(self.update_currency)
         self.quantity_purchased_spinbox.valueChanged.connect(self._update_purchase_quantity)
 
-        self.set_up_ui()
+        self.init_ui()
 
-    def set_up_ui(self):
+    def init_ui(self):
         form_layout = QFormLayout()
         form_layout.setSpacing(20)
         form_layout.addRow(QLabel("Crypto-Currency Purchased:"), self.select_currency_combobox)
