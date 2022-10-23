@@ -10,22 +10,21 @@ class AnalysesGroupBox(QGroupBox):
         self.sale_cost = 0
 
         # Create QLabels to show the CryptoCurrency purchase total
-        total_purchased_label = QLabel("Total Purchased:")
-        self.total_purchased = QLabel("$$.$$")
+        self.total_purchased = QLabel("$00.00")
 
         # Create QLabels to show the CryptoCurrency sell total
-        total_sold_label = QLabel("Total Sold:")
-        self.total_sold = QLabel("$$.$$")
+        self.total_sold = QLabel("$00.00")
 
         # Create QLabels to show the CryptoCurrency profit total
-        total_profit_label = QLabel("Total Profit:")
-        self.total_profit = QLabel("$$.$$")
+        self.total_profit = QLabel("$00.00")
+
+    def init_ui(self):
 
         # Set GroupBox layout
         analyses_layout = QFormLayout()
-        analyses_layout.addRow(total_purchased_label, self.total_purchased)
-        analyses_layout.addRow(total_sold_label, self.total_sold)
-        analyses_layout.addRow(total_profit_label, self.total_profit)
+        analyses_layout.addRow("Total Purchased:", self.total_purchased)
+        analyses_layout.addRow("Total Sold:", self.total_sold)
+        analyses_layout.addRow("Total Profit:", self.total_profit)
 
         self.setLayout(analyses_layout)
 
