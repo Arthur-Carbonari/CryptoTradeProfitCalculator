@@ -4,7 +4,7 @@ from PyQt6.QtWidgets import QGroupBox, QLabel, QFormLayout
 class AnalysesGroupBox(QGroupBox):
     def __init__(self):
 
-        super(AnalysesGroupBox, self).__init__("Purchase")
+        super(AnalysesGroupBox, self).__init__("Analysis")
         self.quantity = 1
         self.purchase_cost = 0
         self.sale_cost = 0
@@ -43,15 +43,15 @@ class AnalysesGroupBox(QGroupBox):
         self.__update_total_sale()
 
     def __update_total_purchased(self):
-        total = str(self.quantity * self.purchase_cost)
-        self.total_purchased.setText("US$ " + total)
+        total = self.quantity * self.purchase_cost
+        self.total_purchased.setText('${:,.2f}'.format(total))
         self.__update_total_profit()
 
     def __update_total_sale(self):
-        total = str(self.quantity * self.sale_cost)
-        self.total_sold.setText("US$ " + total)
+        total = self.quantity * self.sale_cost
+        self.total_sold.setText('${:,.2f}'.format(total))
         self.__update_total_profit()
 
     def __update_total_profit(self):
-        total = str(self.quantity * (self.sale_cost - self.purchase_cost))
-        self.total_profit.setText("US$ " + total)
+        total = self.quantity * (self.sale_cost - self.purchase_cost)
+        self.total_profit.setText('${:,.2f}'.format(total))
