@@ -23,12 +23,12 @@ class CurrencyBox(QWidget):
         self.quantity_purchased_spinbox = QSpinBox()
         self.quantity_purchased_spinbox.setValue(1)
 
-        self.select_currency_combobox.currentTextChanged.connect(self.update_currency)
+        self.select_currency_combobox.currentTextChanged.connect(self._update_currency)
         self.quantity_purchased_spinbox.valueChanged.connect(self._update_purchase_quantity)
 
-        self.init_ui()
+        self._init_ui()
 
-    def init_ui(self):
+    def _init_ui(self):
         form_layout = QFormLayout()
         form_layout.setSpacing(20)
         form_layout.addRow(QLabel("Crypto-Currency Purchased:"), self.select_currency_combobox)
@@ -39,7 +39,7 @@ class CurrencyBox(QWidget):
         wrapper_layout.addStretch(5)
         self.setLayout(wrapper_layout)
 
-    def update_currency(self):
+    def _update_currency(self):
         self.currency = self.select_currency_combobox.currentText()
         self.currency_update.emit()
 
