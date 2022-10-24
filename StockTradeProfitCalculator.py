@@ -1,41 +1,21 @@
-'''
-UPDATED VERSION - 2022
-JLEBRON / B. FOGARTY
-Please make sure you use the PEP guide for naming conventions in your submission
-- detailed guide: https://www.python.org/dev/peps/pep-0008/
-- some examples: https://stackoverflow.com/questions/159720/what-is-the-naming-convention-in-python-for-variable-and-function-names
+"""
+Name: Arthur Carbonari Martins
+Student Number: 3028568
+"""
 
-This assignment is heavily based on
-A Currency Converter GUI Program - Python PyQt5 Desktop Application Development Tutorial
-- GitHub: https://github.com/DarBeck/PyQT5_Tutorial/blob/master/currency_converter.py
-- YouTube: https://www.youtube.com/watch?v=weKpTw1SjM4 - detailed explanaton
-- Keep in mind this example uses PyQt5 not PyQt6
-
-- Layout
-    - I would suggest QGridLayout
-    - Use a QCalendarWidget which you will get from Zetcode tutorial called "Widgets" https://zetcode.com/pyqt6/widgets/
-
-PyCharm Configuration Options
-- Viewing Documentation when working with PyCharm https://www.jetbrains.com/help/pycharm/viewing-external-documentation.html
-- Configuring Python external Documenation on PyCharm https://www.jetbrains.com/help/pycharm/settings-tools-python-external-documentation.html
-'''
-
-# TODO: Delete the above, and include in a comment your name and student number
 # TODO: Remember to fully comment your code
 # TODO: Include a comment 'EXTRA FEATURE' and explain what your Extra Feature does
 # TODO: Don't forget to document your design choices in your UI Design Document
 
-
 # standard imports
 import sys
-from PyQt6.QtCore import QDate, QDateTime, QTime
-from PyQt6.QtGui import QGuiApplication
-from PyQt6.QtWidgets import QLabel, QComboBox, QCalendarWidget, QDialog, QApplication, QGridLayout, QGroupBox, \
-    QFormLayout, QWidget, QVBoxLayout, QHBoxLayout
-from decimal import Decimal
-import pyqtgraph as pg
-from pyqtgraph import DateAxisItem, PlotWidget, PlotItem
 
+# PyQt imports
+from PyQt6.QtCore import QDate
+from PyQt6.QtGui import QGuiApplication
+from PyQt6.QtWidgets import QDialog, QApplication, QWidget, QVBoxLayout, QHBoxLayout
+
+# Local Imports
 from AnalysesGroupBox import AnalysesGroupBox
 from CalendarGroupBox import CalendarGroupBox
 from CurrencyBox import CurrencyBox
@@ -43,7 +23,7 @@ from GraphBox import GraphBox
 
 
 class CryptoTradeProfitCalculator(QDialog):
-    '''
+    """
     Provides the following functionality:
 
     - Allows the selection of the Crypto Coin to be purchased
@@ -53,106 +33,101 @@ class CryptoTradeProfitCalculator(QDialog):
     - Allows the selection of the sell date
     - Displays the sell total
     - Displays the profit total
-    - Additional functionality
-
-    '''
+    - Additional functionality : Graph of the coin value variance
+    """
 
     def __init__(self):
-        '''
-        This method requires substantial updates
-        Each of the widgets should be suitably initalized and laid out
-        '''
+        """
+        This method gets and parses the data from the cvs file, initializes all the widget boxes and calls the init_ui
+        method to set up the layout
+        """
         super().__init__()
 
         # setting up dictionary of Crypto Coins
         self.data = self.make_data()
+        '''Dictionary containing the all the data on the Crypto Coins'''
 
-        # sorting the dictionary of Crypto Coins by the keys. The keys at the high level are dates, so we are sorting by date
+        # sorting the dictionary of Crypto Coins by the keys. The keys at the high level are dates, so we sort by date
         self.stocks = sorted(self.data.keys())
-        '''Array of names for the available crypto currencies.'''
+        '''List of names for the available crypto currencies.'''
 
-        # -------- EXAMPLE --------
-
-        # the following lines of code are for debugging purposes and show you how to access the self.data to get dates and prices
-        # TODO: uncomment to print all the dates and close prices for BTC
-        #print("all the dates and close prices for BTC", self.data['BTC'])
-        # print the close price for BTC on 04/29/2013
-        print("the close price for BTC on 04/29/2013", self.data['BTC'][QDate(2013, 4, 29)])
-
-        # The data in the file is in the following range
-        #     first date in dataset - 29th Apr 2013
-        #     last date in dataset - 6th Jul 2021
-        # When the calendars load we want to ensure that the default dates selected are within the date range above
-        #     we can do this by setting variables to store suitable default values for sellCalendar and buyCalendar.
-        self.sellCalendarDefaultDate = sorted(self.data['BTC'].keys())[-1]
-        # Accessing the last element of a python list is explained with method 2 on https://www.geeksforgeeks.org/python-how-to-get-the-last-element-of-list/
-        print("self.sellCalendarStartDate", self.sellCalendarDefaultDate)
-        # self.buyCalendarDefaultDate = ???
-        # print("self.buyCalendarStartDate", self.buyCalendarDefaultDate)
-
-        # -------- END OF EXAMPLE --------
-
-        self.init_ui()
-
-    def init_ui(self):
-
+        # Initializing the widget boxes
         self.currency_box = CurrencyBox(self.stocks)
+        '''CurrencyBox object that contains the currency combobox and the quantity spinner widgets'''
 
         self.groupbox_calendar = CalendarGroupBox()
+        '''CalendarBox object that contains the purchase calendar and the sale calendar widgets'''
 
         self.graph_box = GraphBox()
+        '''GraphBox object that contains the plot widget'''
 
-        # Create AnalysesGroupBox
         self.groupbox_analyses = AnalysesGroupBox()
+        '''
+        AnalysesBox object that contains the labels widget responsible for displaying the results of the calculations
+        '''
 
-        # TODO: initialize the layout - 6 rows to start
-        main_layout = QVBoxLayout()
-        main_layout.setSpacing(5)
-        main_groupbox = QGroupBox()
-        main_groupbox.setLayout(main_layout)
-        wrapper_layout = QHBoxLayout()
-        wrapper_layout.addWidget(main_groupbox)
-        self.setLayout(wrapper_layout)
-
-        # Add CryptoCurrency selection to layout
-        main_layout.addWidget(self.currency_box)
-
-        # Add group boxes to layout
-        main_layout.addWidget(self.groupbox_calendar)
-
-        h_layout = QGridLayout()
-        h_layout.addWidget(self.graph_box, 0, 0)
-        h_layout.addWidget(self.groupbox_analyses, 0, 1)
-        h_layout.setColumnStretch(0, 4)
-        h_layout.setColumnStretch(1, 2)
-        h_layout.setRowMinimumHeight(0, 300)
-        bottom_group = QWidget()
-        bottom_group.setLayout(h_layout)
-
-        widt = int(QGuiApplication.primaryScreen().geometry().width() * 0.8)
-        self.resize(widt, self.height())
-
-        main_layout.addWidget(bottom_group)
-
-        # TODO: connecting signals to slots to that a change in one control updates the UI
+        # Connecting signals to slots to that a change in one control updates the UI
+        self.currency_box.quantity_update.connect(self.update_purchase_quantity)
         self.currency_box.currency_update.connect(self.update_calendars)
-        self.groupbox_calendar.purchase_quantity_update.connect(self.update_purchase_quantity)
         self.groupbox_calendar.purchase_date_update.connect(self.update_purchase_cost)
         self.groupbox_calendar.sale_date_update.connect(self.update_sale_cost)
         self.groupbox_calendar.sale_date_update.connect(self.update_graph)
 
-        # TODO: set the window title
+        self.init_ui()
+
+    def init_ui(self):
+        """
+        This method, initializes and sets up the UI for this Widget
+        :return: void
+        """
+
+        # Initialize the layout
+        main_layout = QVBoxLayout()
+        main_layout.setSpacing(5)
+        self.setLayout(main_layout)
+
+        # Add currency box selection to layout : contains currency and quantity selection
+        main_layout.addWidget(self.currency_box)
+
+        # Add calendars box to layout : contains purchase and sale calendar widgets
+        main_layout.addWidget(self.groupbox_calendar)
+
+        # Create results layout : contains analyses and graph sections
+        results_layout = QHBoxLayout()
+
+        # Adds graph box to the layout : Displays a graph of dates(x) by value of coin(y), dates(buy_date to sale_date)
+        results_layout.addWidget(self.graph_box, 4)
+
+        # Adds analyses box to the layout : Displays the processed data of the transactions (cost, profit, variance)
+        results_layout.addWidget(self.groupbox_analyses, 2)
+
+        # Creates results group, a wrapper QWidget for the results_layout
+        results_group = QWidget()
+        results_group.setLayout(results_layout)
+        results_group.setMinimumHeight(300)
+
+        # Adds result group to the main layout
+        main_layout.addWidget(results_group)
+
+        # Increases the dialog width if needed
+        screen_size = QGuiApplication.primaryScreen().geometry()
+
+        if self.width() < screen_size.width() * 0.8:
+            self.resize(int(screen_size.width() * 0.8), self.height())
+
+            # set the window title
+            self.setWindowTitle("Crypto-Currency Profit Calculator")
 
         # TODO: update the UI
 
-    def updateUi(self):
-        '''
+    def update_ui(self):
+        """
         This requires substantial development
         Updates the Ui when control values are changed, should also be called when the app initializes
         :return:
-        '''
+        """
         try:
-            print("Update UI")
+            print(self)
             # TODO: get selected dates from calendars
 
             # TODO: perform necessary calculations to calculate totals
@@ -162,44 +137,79 @@ class CryptoTradeProfitCalculator(QDialog):
             print(e)
 
     def update_purchase_quantity(self):
-        self.groupbox_analyses.update_quantity(self.groupbox_calendar.purchase_quantity)
+        """
+        This method is called when a signal is sent that the value of the quantity spinbox is changed, it will then get
+        the new quantity from the currency_box and pass it to the analyses_box object
+        :return: void
+        """
+        self.groupbox_analyses.update_quantity(self.currency_box.quantity)
 
     def update_calendars(self):
-        dates = sorted(self.data[self.currency_box.selected_currency].keys())
+        """
+        This method is called when a signal is sent that the value for the currency drop box has changed, it will then
+        get the dates for the newly selected currency on the data dictionary and pass those dates to the calendar_box
+        object
+        :return: void
+        """
+        dates = sorted(self.data[self.currency_box.currency].keys())
         self.groupbox_calendar.update_dates(dates)
 
     def update_purchase_cost(self):
-        purchase_cost = self.data[self.currency_box.selected_currency][self.groupbox_calendar.purchase_date]
+        """
+        This method is called when a signal is sent that the date of the purchase has been updated on the purchase
+        calendar, it will then get the cost for the new selected date, and pass that cost to the analyses_box
+        object
+        :return: void
+        """
+        purchase_cost = self.data[self.currency_box.currency][self.groupbox_calendar.purchase_date]
 
         self.groupbox_analyses.update_purchase_cost(purchase_cost)
 
     def update_sale_cost(self):
-        sale_cost = self.data[self.currency_box.selected_currency][self.groupbox_calendar.sale_date]
+        """
+        This method is called when a signal is sent that the date of the sale has been updated on the sale calendar, it
+        will then get the cost for the new sale date from data and pass that cost to the analyses_box object
+        :return:
+        """
+        sale_cost = self.data[self.currency_box.currency][self.groupbox_calendar.sale_date]
         self.groupbox_analyses.update_sale_cost(sale_cost)
 
     def update_graph(self):
-        currency_data = self.data[self.currency_box.selected_currency]
+        """
+        This method is called when a signal is sent that the sale date was updated, (whenever the currency or the
+        purchase date is updated, the sale date is updated as well, so it is only required to watch for a sale date
+        update) and then get the passes all dates and currency values between purchase and sale to the graph_box object
+        :return:
+        """
 
+        # gets the data for the selected currency
+        currency_data = self.data[self.currency_box.currency]
+
+        # gets start and end date
         start_date = self.groupbox_calendar.purchase_date
         end_date = self.groupbox_calendar.sale_date
 
+        # get list of all dates and of the values for the current currency
         dates = list(currency_data.keys())
         values = list(currency_data.values())
 
+        # finds the index of the start and end date
         start_index = dates.index(start_date)
         end_index = dates.index(end_date)
 
-        plot_dates = dates[start_index:end_index+1]
-        plot_values = values[start_index:end_index+1]
+        # using the found indexes splits the dates and values array and then passes them to the graph_box
+        plot_dates = dates[start_index:end_index + 1]
+        plot_values = values[start_index:end_index + 1]
 
         self.graph_box.update_plot(plot_dates, plot_values)
 
-    ################ YOU DO NOT HAVE TO EDIT CODE BELOW THIS POINT  ########################################################
+    # ================ YOU DO NOT HAVE TO EDIT CODE BELOW THIS POINT  ==================================================
 
     def make_data(self):
-        '''
+        """
         This code is complete
-         Data source is derived from https://www.kaggle.com/sudalairajkumar/cryptocurrencypricehistory but use the provided file to avoid confusion
+         Data source is derived from https://www.kaggle.com/sudalairajkumar/cryptocurrencypricehistory but use the
+         provided file to avoid confusion
 
          Stock   -> Date      -> Close
             BTC     -> 29/04/2013 -> 144.54
@@ -214,11 +224,14 @@ class CryptoTradeProfitCalculator(QDialog):
         - nested dictionaries https://stackoverflow.com/questions/16333296/how-do-you-create-nested-dict-in-python
         - https://www.tutorialspoint.com/python3/python_strings.htm
         :return: a dictionary of dictionaries
-        '''
-        data = {}  # empty data dictionary (will store what we read from the file here)
+        """
+        data = {}
+        '''empty data dictionary (will store what we read from the file here)'''
         try:
-            file = open(".//combined.csv", "r")  # open a CSV file for reading https://docs.python.org/3/library/functions.html#open
-            file_rows = []  # empty list of file rows
+            # open a CSV file for reading https://docs.python.org/3/library/functions.html#open
+            file = open(".//combined.csv", "r")
+            # empty list of file rows
+            file_rows = []
             # add rows to the file_rows list
             for row in file:
                 file_rows.append(row.strip())  # https://www.geeksforgeeks.org/python-string-strip-2/
@@ -259,32 +272,34 @@ class CryptoTradeProfitCalculator(QDialog):
         except:
             print("Error: combined.csv file not found. ")
             print("Make sure you have imported this file into your project.")
-        #return the data
+        # return the data
         print("____________________________________________________")
-        print("Amount of Currencies stored in data:", len(data)) #will be 0 if empty/error
+        print("Amount of Currencies stored in data:", len(data))  # will be 0 if empty/error
         print("**************************************************************************")
         return data
 
-    def string_date_into_QDate(self, date_String):
-        '''
+    @staticmethod
+    def string_date_into_QDate(date_string):
+        """
         This method is complete
         Converts a data in a string format like that in a CSV file to QDate Objects for use with QCalendarWidget
-        :param date_String: data in a string format
+        :param date_string: data in a string format
         :return:
-        '''
-        date_list = date_String.split("-")
+        """
+        date_list = date_string.split("-")
         date_QDate = QDate(int(date_list[0]), int(date_list[1]), int(date_list[2]))
         return date_QDate
 
-    def unique(self, non_unique_list):
-        '''
+    @staticmethod
+    def unique(non_unique_list):
+        """
         This method is complete
         Converts a list of non-unique values into a list of unique values
         Developed from https://www.geeksforgeeks.org/python-get-unique-values-list/
         :param non_unique_list: a list of non-unique values
         :return: a list of unique values
-        '''
-        # intilize a null list
+        """
+        # initialize a null list
         unique_list = []
 
         # traverse for all elements
