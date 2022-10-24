@@ -55,13 +55,13 @@ class CryptoTradeProfitCalculator(QDialog):
         self.currency_box = CurrencyBox(self.stocks)
         '''CurrencyBox object that contains the currency combobox and the quantity spinner widgets'''
 
-        self.groupbox_calendar = CalendarBox()
+        self.calendar_box = CalendarBox()
         '''CalendarBox object that contains the purchase calendar and the sale calendar widgets'''
 
         self.graph_box = GraphBox()
         '''GraphBox object that contains the plot widget'''
 
-        self.groupbox_analyses = AnalysesBox()
+        self.analyses_box = AnalysesBox()
         '''
         AnalysesBox object that contains the labels widget responsible for displaying the results of the calculations
         '''
@@ -69,15 +69,15 @@ class CryptoTradeProfitCalculator(QDialog):
         # Connecting signals to slots to that a change in one control updates the UI
         self.currency_box.quantity_update.connect(self.update_purchase_quantity)
         self.currency_box.currency_update.connect(self.update_calendars)
-        self.groupbox_calendar.purchase_date_update.connect(self.update_purchase_cost)
-        self.groupbox_calendar.sale_date_update.connect(self.update_sale_cost)
-        self.groupbox_calendar.sale_date_update.connect(self.update_graph)
+        self.calendar_box.purchase_date_update.connect(self.update_purchase_cost)
+        self.calendar_box.sale_date_update.connect(self.update_sale_cost)
+        self.calendar_box.sale_date_update.connect(self.update_graph)
 
         self.init_ui()
 
     def init_ui(self):
         """
-        This method, initializes and sets up the UI for this Widget
+        This method, initializes and sets up the UI layout for this Dialog
         :return: void
         """
 
@@ -90,7 +90,7 @@ class CryptoTradeProfitCalculator(QDialog):
         main_layout.addWidget(self.currency_box)
 
         # Add calendars box to layout : contains purchase and sale calendar widgets
-        main_layout.addWidget(self.groupbox_calendar)
+        main_layout.addWidget(self.calendar_box)
 
         # Create results layout : contains analyses and graph sections
         results_layout = QHBoxLayout()
@@ -99,7 +99,7 @@ class CryptoTradeProfitCalculator(QDialog):
         results_layout.addWidget(self.graph_box, 4)
 
         # Adds analyses box to the layout : Displays the processed data of the transactions (cost, profit, variance)
-        results_layout.addWidget(self.groupbox_analyses, 2)
+        results_layout.addWidget(self.analyses_box, 2)
 
         # Creates results group, a wrapper QWidget for the results_layout
         results_group = QWidget()
@@ -142,7 +142,7 @@ class CryptoTradeProfitCalculator(QDialog):
         the new quantity from the currency_box and pass it to the analyses_box object
         :return: void
         """
-        self.groupbox_analyses.update_quantity(self.currency_box.quantity)
+        self.analyses_box.update_quantity(self.currency_box.quantity)
 
     def update_calendars(self):
         """
@@ -152,7 +152,7 @@ class CryptoTradeProfitCalculator(QDialog):
         :return: void
         """
         dates = sorted(self.data[self.currency_box.currency].keys())
-        self.groupbox_calendar.update_dates(dates)
+        self.calendar_box.update_dates(dates)
 
     def update_purchase_cost(self):
         """
@@ -161,9 +161,9 @@ class CryptoTradeProfitCalculator(QDialog):
         object
         :return: void
         """
-        purchase_cost = self.data[self.currency_box.currency][self.groupbox_calendar.purchase_date]
+        purchase_cost = self.data[self.currency_box.currency][self.calendar_box.purchase_date]
 
-        self.groupbox_analyses.update_purchase_cost(purchase_cost)
+        self.analyses_box.update_purchase_cost(purchase_cost)
 
     def update_sale_cost(self):
         """
@@ -171,8 +171,8 @@ class CryptoTradeProfitCalculator(QDialog):
         will then get the cost for the new sale date from data and pass that cost to the analyses_box object
         :return:
         """
-        sale_cost = self.data[self.currency_box.currency][self.groupbox_calendar.sale_date]
-        self.groupbox_analyses.update_sale_cost(sale_cost)
+        sale_cost = self.data[self.currency_box.currency][self.calendar_box.sale_date]
+        self.analyses_box.update_sale_cost(sale_cost)
 
     def update_graph(self):
         """
@@ -186,8 +186,8 @@ class CryptoTradeProfitCalculator(QDialog):
         currency_data = self.data[self.currency_box.currency]
 
         # gets start and end date
-        start_date = self.groupbox_calendar.purchase_date
-        end_date = self.groupbox_calendar.sale_date
+        start_date = self.calendar_box.purchase_date
+        end_date = self.calendar_box.sale_date
 
         # get list of all dates and of the values for the current currency
         dates = list(currency_data.keys())
