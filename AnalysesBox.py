@@ -1,10 +1,10 @@
 from PyQt6.QtWidgets import QGroupBox, QLabel, QFormLayout
 
 
-class AnalysesGroupBox(QGroupBox):
+class AnalysesBox(QGroupBox):
     def __init__(self):
 
-        super(AnalysesGroupBox, self).__init__("Analysis")
+        super(AnalysesBox, self).__init__("Analysis")
         self.quantity = 1
         self.purchase_cost = 0
         self.sale_cost = 0

@@ -2,7 +2,7 @@ from PyQt6.QtCore import QDate, pyqtSignal
 from PyQt6.QtWidgets import QGroupBox, QLabel, QCalendarWidget, QSpinBox, QFormLayout, QHBoxLayout, QWidget
 
 
-class CalendarGroupBox(QWidget):
+class CalendarBox(QWidget):
 
     purchase_date = None
     purchase_date_update = pyqtSignal()
@@ -14,7 +14,7 @@ class CalendarGroupBox(QWidget):
 
     def __init__(self):
 
-        super(CalendarGroupBox, self).__init__()
+        super(CalendarBox, self).__init__()
 
         # Create CalendarWidgets for selection of purchase and sell dates:
         self.purchase_date_calendar = QCalendarWidget()

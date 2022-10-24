@@ -16,8 +16,8 @@ from PyQt6.QtGui import QGuiApplication
 from PyQt6.QtWidgets import QDialog, QApplication, QWidget, QVBoxLayout, QHBoxLayout
 
 # Local Imports
-from AnalysesGroupBox import AnalysesGroupBox
-from CalendarGroupBox import CalendarGroupBox
+from AnalysesBox import AnalysesBox
+from CalendarBox import CalendarBox
 from CurrencyBox import CurrencyBox
 from GraphBox import GraphBox
 
@@ -55,13 +55,13 @@ class CryptoTradeProfitCalculator(QDialog):
         self.currency_box = CurrencyBox(self.stocks)
         '''CurrencyBox object that contains the currency combobox and the quantity spinner widgets'''
 
-        self.groupbox_calendar = CalendarGroupBox()
+        self.groupbox_calendar = CalendarBox()
         '''CalendarBox object that contains the purchase calendar and the sale calendar widgets'''
 
         self.graph_box = GraphBox()
         '''GraphBox object that contains the plot widget'''
 
-        self.groupbox_analyses = AnalysesGroupBox()
+        self.groupbox_analyses = AnalysesBox()
         '''
         AnalysesBox object that contains the labels widget responsible for displaying the results of the calculations
         '''
