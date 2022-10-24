@@ -38,8 +38,8 @@ class CryptoTradeProfitCalculator(QDialog):
 
     def __init__(self):
         """
-        This method gets and parses the data from the cvs file, initializes all the widget boxes and calls the init_ui
-        method to set up the layout
+        Initializes all the widget boxes, gets the data from the csv file and calls the init_ui method to set up the
+        layout
         """
         super().__init__()
 
@@ -109,14 +109,13 @@ class CryptoTradeProfitCalculator(QDialog):
         # Adds result group to the main layout
         main_layout.addWidget(results_group)
 
-        # Increases the dialog width if needed
+        # Readjusts the Dialog size
         screen_size = QGuiApplication.primaryScreen().geometry()
 
-        if self.width() < screen_size.width() * 0.8:
-            self.resize(int(screen_size.width() * 0.8), self.height())
+        self.resize(int(screen_size.width() * 0.7), int(screen_size.height()*0.85))
 
-            # set the window title
-            self.setWindowTitle("Crypto-Currency Profit Calculator")
+        # set the window title
+        self.setWindowTitle("Crypto-Currency Profit Calculator")
 
         # TODO: update the UI
 
