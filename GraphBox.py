@@ -1,6 +1,6 @@
 from PyQt6.QtCore import QDateTime, QDate, QTime
 from PyQt6.QtWidgets import QGroupBox, QHBoxLayout
-from pyqtgraph import PlotWidget, DateAxisItem
+from pyqtgraph import PlotWidget, DateAxisItem, ViewBox
 
 
 class GraphBox(QGroupBox):
@@ -33,4 +33,5 @@ class GraphBox(QGroupBox):
         if self.plot:
             self.widget.removeItem(self.plot)
 
+        self.widget.enableAutoRange(ViewBox.XYAxes)
         self.plot = self.widget.plot(dates, values)
