@@ -1,9 +1,18 @@
 """
 Name: Arthur Carbonari Martins
 Student Number: 3028568
-"""
 
-# TODO: Include a comment 'EXTRA FEATURE' and explain what your Extra Feature does
+Link to remote repository: https://github.com/Arthur-Carbonari/CryptoTradeProfitCalculator
+
+EXTRA FEATURE:
+
+For my extra feature I made a responsive graph that displays in a line graph the value fluctuation of the cryptocurrency
+The graph has an X axis representing the time, and a Y axis representing the value of the crypto coin.
+The graph displays data from the selected purchase date to the selected sale date.
+Whenever the user changes the selected currency, the purchase date or the sale date the graph is updated accordingly.
+
+You can see the code for the extra feature in the GraphBox.py file.
+"""
 
 # standard imports
 import sys
@@ -115,7 +124,6 @@ class CryptoTradeProfitCalculator(QDialog):
         # set the window title
         self.setWindowTitle("Crypto-Currency Profit Calculator")
         self.setWindowIcon(QIcon('./assets/icon.png'))  # https://www.flaticon.com/free-icons/cryptocurrency
-        # TODO: update the UI
 
     def update_purchase_quantity(self):
         """

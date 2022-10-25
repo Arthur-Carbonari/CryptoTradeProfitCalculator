@@ -1,5 +1,5 @@
 from PyQt6.QtCore import pyqtSignal
-from PyQt6.QtWidgets import QWidget, QComboBox, QHBoxLayout, QLabel, QSpinBox, QGridLayout, QFormLayout, QGroupBox
+from PyQt6.QtWidgets import QWidget, QComboBox, QHBoxLayout, QLabel, QSpinBox, QFormLayout
 
 
 class CurrencyBox(QWidget):

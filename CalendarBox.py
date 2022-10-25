@@ -52,7 +52,7 @@ class CalendarBox(QWidget):
         purchase_layout.addRow(QLabel("Date Purchased:"), self.purchase_date_calendar)
         groupbox_purchase.setLayout(purchase_layout)
 
-        # Set Sale GroupBox layout TODO: add sale quantity spinner and connect it to the rest of the application logic
+        # Set Sale GroupBox layout
         sale_layout = QFormLayout()
         sale_layout.addRow(QLabel("Date Sold:"), self.sale_date_calendar)
         groupbox_sell.setLayout(sale_layout)
