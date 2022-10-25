@@ -8,7 +8,7 @@ class AnalysesBox(QGroupBox):
         the layout
         """
 
-        super(AnalysesBox, self).__init__("Analysis")
+        super(AnalysesBox, self).__init__("Analyses")
         self.quantity = 1
         self.purchase_cost = 0
         self.sale_cost = 0
