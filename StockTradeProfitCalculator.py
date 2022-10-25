@@ -3,16 +3,14 @@ Name: Arthur Carbonari Martins
 Student Number: 3028568
 """
 
-# TODO: Remember to fully comment your code
 # TODO: Include a comment 'EXTRA FEATURE' and explain what your Extra Feature does
-# TODO: Don't forget to document your design choices in your UI Design Document
 
 # standard imports
 import sys
 
 # PyQt imports
 from PyQt6.QtCore import QDate
-from PyQt6.QtGui import QGuiApplication
+from PyQt6.QtGui import QGuiApplication, QIcon
 from PyQt6.QtWidgets import QDialog, QApplication, QWidget, QVBoxLayout, QHBoxLayout
 
 # Local Imports
@@ -116,7 +114,7 @@ class CryptoTradeProfitCalculator(QDialog):
 
         # set the window title
         self.setWindowTitle("Crypto-Currency Profit Calculator")
-
+        self.setWindowIcon(QIcon('./assets/icon.png'))  # https://www.flaticon.com/free-icons/cryptocurrency
         # TODO: update the UI
 
     def update_purchase_quantity(self):
