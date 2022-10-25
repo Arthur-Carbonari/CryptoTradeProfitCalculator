@@ -16,6 +16,9 @@ class GraphBox(QGroupBox):
         # initializes Plot Widget and sets x-axis to represent time
         self.widget = PlotWidget()
         self.widget.setAxisItems({'bottom': DateAxisItem()})
+        self.widget.setLabel('left', 'Coin Value', units='$')
+        self.widget.setLabel('bottom', 'Date')
+        self.widget.showGrid(x=True, y=True)
 
         # initializes fields
         self.plot = None
