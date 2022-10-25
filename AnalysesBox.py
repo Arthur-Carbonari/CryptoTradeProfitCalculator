@@ -114,5 +114,5 @@ class AnalysesBox(QGroupBox):
         :return: void
         """
 
-        total = self.sale_cost / self.purchase_cost - 1
+        total = (self.sale_cost / self.purchase_cost - 1) * 100
         self.total_variance.setText('{:,.2f}%'.format(total))
