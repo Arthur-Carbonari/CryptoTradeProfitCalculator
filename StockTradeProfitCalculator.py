@@ -119,22 +119,6 @@ class CryptoTradeProfitCalculator(QDialog):
 
         # TODO: update the UI
 
-    def update_ui(self):
-        """
-        This requires substantial development
-        Updates the Ui when control values are changed, should also be called when the app initializes
-        :return:
-        """
-        try:
-            print(self)
-            # TODO: get selected dates from calendars
-
-            # TODO: perform necessary calculations to calculate totals
-
-            # TODO: update the label displaying totals
-        except Exception as e:
-            print(e)
-
     def update_purchase_quantity(self):
         """
         This method is called when a signal is sent that the value of the quantity spinbox is changed, it will then get
